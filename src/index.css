@@ -8,6 +8,8 @@
   --color-primary: #f4a51c;
   --color-primary-hover: #e5950d;
   --color-border: #2d3748;
+  --color-error: #f45d5d;
+  --color-error-bg: rgba(244, 93, 93, 0.12);
   --radius: 8px;
   --max-width: 1160px;
   --navbar-height: 64px;
@@ -159,5 +161,109 @@ body {
 }
 
 .page-not-found p {
+  color: var(--color-muted);
+}
+
+.page-auth {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 2rem 1.75rem;
+}
+
+.auth-card h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.5rem;
+}
+
+.auth-subtitle {
+  color: var(--color-muted);
+  margin: 0 0 1.5rem;
+}
+
+.auth-switch {
+  margin: 1.25rem 0 0;
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.auth-switch a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.95rem;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(244, 165, 28, 0.15);
+}
+
+.form-input.invalid {
+  border-color: var(--color-error);
+}
+
+.form-error {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-error);
+}
+
+.alert {
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.alert-error {
+  color: var(--color-error);
+  background-color: var(--color-error-bg);
+  border: 1px solid var(--color-error);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.text-muted {
   color: var(--color-muted);
 }

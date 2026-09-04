@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import MainLayout from '../components/layout/MainLayout.jsx'
+import ProtectedRoute from './ProtectedRoute.jsx'
 import Home from '../pages/Home.jsx'
 import Login from '../pages/Login.jsx'
 import Register from '../pages/Register.jsx'
@@ -16,7 +17,14 @@ export default function AppRoutes() {
         <Route path="/register" element={<Register />} />
         <Route path="/maps" element={<Maps />} />
         <Route path="/lineups" element={<Lineups />} />
-        <Route path="/workshop" element={<Workshop />} />
+        <Route
+          path="/workshop"
+          element={
+            <ProtectedRoute>
+              <Workshop />
+            </ProtectedRoute>
+          }
+        />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
