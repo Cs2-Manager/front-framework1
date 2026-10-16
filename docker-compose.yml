@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  frontend:
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      - VITE_API_URL=http://localhost:5000/api
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
