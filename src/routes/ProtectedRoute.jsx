@@ -8,7 +8,10 @@ export default function ProtectedRoute({ children }) {
   if (initializing) {
     return (
       <div className="page container">
-        <p className="text-muted">Cargando sesión…</p>
+        <div className="page-loading" role="status" aria-live="polite">
+          <span className="spinner" aria-hidden="true" />
+          <p>Cargando sesión…</p>
+        </div>
       </div>
     )
   }
