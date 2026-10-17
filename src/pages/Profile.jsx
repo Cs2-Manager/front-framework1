@@ -1,0 +1,75 @@
+﻿import { useAuth } from '../context/AuthContext.jsx'
+import ProfileHeader from '../components/profile/ProfileHeader.jsx'
+import ProfileActions from '../components/profile/ProfileActions.jsx'
+import StatCard from '../components/profile/StatCard.jsx'
+import {
+  AccountIcon,
+  CalendarIcon,
+  IdIcon,
+  MailIcon,
+} from '../components/profile/icons.jsx'
+
+function formatDate(value) {
+  if (!value) return 'No disponible'
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return 'No disponible'
+  return date.toLocaleDateString('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
+
+export default function Profile() {
+  const { user, logout } = useAuth()
+
+  if (!user) {
+    return (
+      <div className="page container page-profile">
+        <div className="profile-loading" role="status" aria-live="polite">
+          <span className="spinner" aria-hidden="true" />
+          <p>Cargando perfil…</p>
+        </div>
+      </div>
+    )
+  }
+
+  const stats = [
+    {
+      icon: <AccountIcon />,
+      value: user.username,
+      label: 'Nombre de usuario',
+    },
+    { icon: <MailIcon />, value: user.email, label: 'Correo electrónico' },
+    { icon: <IdIcon />, value: `#${user.id}`, label: 'Identificador' },
+    {
+      icon: <CalendarIcon />,
+      value: formatDate(user.created_at),
+      label: 'Miembro desde',
+    },
+  ]
+
+  return (
+    <div className="page container page-profile">
+      <div className="profile-card fade-in-up">
+        <ProfileHeader user={user} onLogout={logout} />
+
+        <div className="profile-content">
+          <section className="profile-section">
+            <h2>Información de la cuenta</h2>
+            <div className="profile-stats">
+              {stats.map((stat) => (
+                <StatCard key={stat.label} {...stat} />
+              ))}
+            </div>
+          </section>
+
+          <section className="profile-section">
+            <h2>Acciones</h2>
+            <ProfileActions onLogout={logout} />
+          </section>
+        </div>
+      </div>
+    </div>
+  )
+}
