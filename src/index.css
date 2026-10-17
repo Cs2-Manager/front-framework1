@@ -951,6 +951,7 @@ body {
 }
 
 /* Avatar y menú de perfil */
+/* Avatar y men� de perfil */
 .profile-menu {
   position: relative;
 }
@@ -1066,6 +1067,7 @@ body {
 }
 
 /* Página de Perfil */
+/* P�gina de Perfil */
 .page-profile {
   display: flex;
   align-items: flex-start;
@@ -1686,4 +1688,5 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
 }
