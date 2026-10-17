@@ -48,6 +48,8 @@ export default function Register() {
 
   async function handleSubmit(event) {
     event.preventDefault()
+    if (submitting) return
+
     const nextErrors = validate()
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors)
@@ -62,7 +64,10 @@ export default function Register() {
         email: form.email,
         password: form.password,
       })
-      navigate('/', { replace: true })
+      navigate('/login', {
+        replace: true,
+        state: { registered: true, email: form.email },
+      })
     } catch (err) {
       setServerError(
         err.response?.data?.message ||
@@ -149,7 +154,14 @@ export default function Register() {
         </div>
 
         <button type="submit" className="btn btn-primary btn-block" disabled={submitting}>
-          {submitting ? 'Registrando…' : 'Registrarse'}
+          {submitting ? (
+            <>
+              <span className="spinner spinner-sm" aria-hidden="true" />
+              Registrando…
+            </>
+          ) : (
+            'Registrarse'
+          )}
         </button>
 
         <p className="auth-switch">

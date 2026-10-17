@@ -8,9 +8,11 @@ export default function Login() {
   const { login } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const from = location.state?.from?.pathname || '/'
+  const from = location.state?.from?.pathname
+  const justRegistered = location.state?.registered
+  const registeredEmail = location.state?.email || ''
 
-  const [form, setForm] = useState({ email: '', password: '' })
+  const [form, setForm] = useState({ email: registeredEmail, password: '' })
   const [errors, setErrors] = useState({})
   const [serverError, setServerError] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -36,6 +38,8 @@ export default function Login() {
 
   async function handleSubmit(event) {
     event.preventDefault()
+    if (submitting) return
+
     const nextErrors = validate()
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors)
@@ -46,7 +50,7 @@ export default function Login() {
     setServerError('')
     try {
       await login({ email: form.email, password: form.password })
-      navigate(from, { replace: true })
+      navigate(from || '/profile', { replace: true })
     } catch (err) {
       setServerError(
         err.response?.data?.message ||
@@ -65,6 +69,12 @@ export default function Login() {
         <p className="auth-subtitle">
           Ingresá a tu cuenta para acceder a tu espacio de entrenamiento.
         </p>
+
+        {justRegistered && !serverError && (
+          <div className="alert alert-success" role="status">
+            Cuenta creada correctamente. Ya podés iniciar sesión.
+          </div>
+        )}
 
         {serverError && (
           <div className="alert alert-error" role="alert">
@@ -100,8 +110,19 @@ export default function Login() {
           {errors.password && <p className="form-error">{errors.password}</p>}
         </div>
 
-        <button type="submit" className="btn btn-primary btn-block" disabled={submitting}>
-          {submitting ? 'Ingresando…' : 'Iniciar sesión'}
+        <button
+          type="submit"
+          className="btn btn-primary btn-block"
+          disabled={submitting}
+        >
+          {submitting ? (
+            <>
+              <span className="spinner spinner-sm" aria-hidden="true" />
+              Ingresando…
+            </>
+          ) : (
+            'Iniciar sesión'
+          )}
         </button>
 
         <p className="auth-switch">

@@ -8,6 +8,7 @@ import Maps from '../pages/Maps.jsx'
 import MapDetail from '../pages/MapDetail.jsx'
 import Lineups from '../pages/Lineups.jsx'
 import Workshop from '../pages/Workshop.jsx'
+import Profile from '../pages/Profile.jsx'
 
 export default function AppRoutes() {
   return (
@@ -24,6 +25,14 @@ export default function AppRoutes() {
           element={
             <ProtectedRoute>
               <Workshop />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />
