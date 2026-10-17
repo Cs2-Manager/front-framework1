@@ -17,9 +17,30 @@ export default function AppRoutes() {
         <Route index element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/maps" element={<Maps />} />
-        <Route path="/maps/:id" element={<MapDetail />} />
-        <Route path="/lineups" element={<Lineups />} />
+        <Route
+          path="/maps"
+          element={
+            <ProtectedRoute>
+              <Maps />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/maps/:id"
+          element={
+            <ProtectedRoute>
+              <MapDetail />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/lineups"
+          element={
+            <ProtectedRoute>
+              <Lineups />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/workshop"
           element={

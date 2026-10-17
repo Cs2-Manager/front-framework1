@@ -950,6 +950,7 @@ body {
   display: none;
 }
 
+/* Avatar y menú de perfil */
 /* Avatar y men� de perfil */
 .profile-menu {
   position: relative;
@@ -1065,6 +1066,7 @@ body {
   flex-shrink: 0;
 }
 
+/* Página de Perfil */
 /* P�gina de Perfil */
 .page-profile {
   display: flex;
