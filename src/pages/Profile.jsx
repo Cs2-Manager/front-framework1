@@ -1,3 +1,13 @@
+﻿import { useAuth } from '../context/AuthContext.jsx'
+import ProfileHeader from '../components/profile/ProfileHeader.jsx'
+import ProfileActions from '../components/profile/ProfileActions.jsx'
+import StatCard from '../components/profile/StatCard.jsx'
+import {
+  AccountIcon,
+  CalendarIcon,
+  IdIcon,
+  MailIcon,
+} from '../components/profile/icons.jsx'
 ﻿import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
 
@@ -26,11 +36,26 @@ export default function Profile() {
     )
   }
 
+  const stats = [
+    {
+      icon: <AccountIcon />,
+      value: user.username,
+      label: 'Nombre de usuario',
+    },
+    { icon: <MailIcon />, value: user.email, label: 'Correo electrónico' },
+    { icon: <IdIcon />, value: `#${user.id}`, label: 'Identificador' },
+    {
+      icon: <CalendarIcon />,
+      value: formatDate(user.created_at),
+      label: 'Miembro desde',
+    },
+  ]
   const initial = user.username?.charAt(0).toUpperCase() || 'U'
 
   return (
     <div className="page container page-profile">
       <div className="profile-card fade-in-up">
+        <ProfileHeader user={user} onLogout={logout} />
         <div className="profile-header">
           <div className="profile-avatar-large" aria-hidden="true">
             {initial}
@@ -67,6 +92,9 @@ export default function Profile() {
           <section className="profile-section">
             <h2>Información de la cuenta</h2>
             <div className="profile-stats">
+              {stats.map((stat) => (
+                <StatCard key={stat.label} {...stat} />
+              ))}
               <div className="stat-card">
                 <span className="stat-icon" aria-hidden="true">
                   <svg
@@ -165,6 +193,7 @@ export default function Profile() {
 
           <section className="profile-section">
             <h2>Acciones</h2>
+            <ProfileActions onLogout={logout} />
             <div className="profile-actions">
               <Link to="/" className="btn btn-ghost">
                 <svg

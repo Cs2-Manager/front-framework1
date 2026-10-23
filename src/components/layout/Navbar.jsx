@@ -1,4 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+
+import { useAuth } from '../../context/AuthContext.jsx'
+import NavLinks from './NavLinks.jsx'
+import ProfileMenu from './ProfileMenu.jsx'
+import NavbarMobileMenu from './NavbarMobileMenu.jsx'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext.jsx'
 
@@ -87,6 +93,18 @@ export default function Navbar() {
           CS2 Manager
         </Link>
 
+        <NavLinks links={NAV_LINKS} ariaLabel="Navegación principal" />
+
+        <div className="navbar-actions">
+          {isAuthenticated && user ? (
+            <ProfileMenu
+              user={user}
+              open={menuOpen}
+              onToggle={() => setMenuOpen((open) => !open)}
+              onClose={() => setMenuOpen(false)}
+              onLogout={handleLogout}
+              menuRef={menuRef}
+            />
         <nav className="navbar-nav" aria-label="Navegación principal">
           {NAV_LINKS.map((link) => (
             <NavLink
@@ -224,6 +242,14 @@ export default function Navbar() {
           )}
         </div>
       </div>
+
+      <NavbarMobileMenu
+        open={mobileOpen}
+        links={NAV_LINKS}
+        isAuthenticated={isAuthenticated}
+        user={user}
+        onLogout={handleLogout}
+      />
     </header>
   )
 }
