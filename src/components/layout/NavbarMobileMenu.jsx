@@ -3,13 +3,39 @@ import { Link } from 'react-router-dom'
 import NavLinks from './NavLinks.jsx'
 import { LogoutIcon, UserIcon } from './icons.jsx'
 
-export default function NavbarMobileMenu({
-  open,
-  links,
-  isAuthenticated,
-  user,
-  onLogout,
-}) {
+function MobileAccountActions({ onLogout }) {
+  return (
+    <>
+      <Link to="/profile" className="btn btn-ghost btn-block">
+        <UserIcon />
+        Mi perfil
+      </Link>
+      <button
+        type="button"
+        onClick={onLogout}
+        className="btn btn-danger btn-block"
+      >
+        <LogoutIcon />
+        Cerrar sesión
+      </button>
+    </>
+  )
+}
+
+function MobileGuestActions() {
+  return (
+    <>
+      <Link to="/login" className="btn btn-ghost btn-block">
+        Iniciar sesión
+      </Link>
+      <Link to="/register" className="btn btn-primary btn-block">
+        Registrarse
+      </Link>
+    </>
+  )
+}
+
+export default function NavbarMobileMenu({ open, links, isAuthenticated, user, onLogout }) {
   return (
     <div className={`navbar-mobile ${open ? 'open' : ''}`}>
       <NavLinks
@@ -19,29 +45,9 @@ export default function NavbarMobileMenu({
       />
       <div className="navbar-mobile-actions">
         {isAuthenticated && user ? (
-          <>
-            <Link to="/profile" className="btn btn-ghost btn-block">
-              <UserIcon />
-              Mi perfil
-            </Link>
-            <button
-              type="button"
-              onClick={onLogout}
-              className="btn btn-danger btn-block"
-            >
-              <LogoutIcon />
-              Cerrar sesión
-            </button>
-          </>
+          <MobileAccountActions onLogout={onLogout} />
         ) : (
-          <>
-            <Link to="/login" className="btn btn-ghost btn-block">
-              Iniciar sesión
-            </Link>
-            <Link to="/register" className="btn btn-primary btn-block">
-              Registrarse
-            </Link>
-          </>
+          <MobileGuestActions />
         )}
       </div>
     </div>
