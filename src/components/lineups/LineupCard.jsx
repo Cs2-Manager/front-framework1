@@ -1,14 +1,35 @@
 import CardActions from '../common/CardActions.jsx'
 import { youtubeEmbedUrl } from '../../utils/video.js'
 
-export default function LineupCard({
-  lineup,
-  mapName,
-  active,
-  onSelect,
-  onEdit,
-  onDelete,
-}) {
+function LineupThumb({ lineup, thumbId }) {
+  return (
+    <div className="lineup-thumb">
+      {thumbId ? (
+        <img
+          src={`https://img.youtube.com/vi/${thumbId}/hqdefault.jpg`}
+          alt={lineup.title}
+          loading="lazy"
+        />
+      ) : (
+        <div className="lineup-thumb-fallback">{lineup.type}</div>
+      )}
+    </div>
+  )
+}
+
+function LineupTags({ lineup, mapName }) {
+  return (
+    <div className="lineup-tags">
+      <span className="tag tag-type">{lineup.type}</span>
+      <span className={`tag tag-side tag-${lineup.side.toLowerCase()}`}>
+        {lineup.side}
+      </span>
+      <span className="tag tag-map">{mapName || 'Mapa'}</span>
+    </div>
+  )
+}
+
+export default function LineupCard({ lineup, mapName, active, onSelect, onEdit, onDelete }) {
   const embed = youtubeEmbedUrl(lineup.video_url)
   const thumbId = embed ? embed.split('/').pop() : null
 
@@ -17,25 +38,9 @@ export default function LineupCard({
       className={`lineup-card${active ? ' active' : ''}`}
       onClick={() => onSelect(lineup)}
     >
-      <div className="lineup-thumb">
-        {thumbId ? (
-          <img
-            src={`https://img.youtube.com/vi/${thumbId}/hqdefault.jpg`}
-            alt={lineup.title}
-            loading="lazy"
-          />
-        ) : (
-          <div className="lineup-thumb-fallback">{lineup.type}</div>
-        )}
-      </div>
+      <LineupThumb lineup={lineup} thumbId={thumbId} />
       <div className="lineup-card-body">
-        <div className="lineup-tags">
-          <span className="tag tag-type">{lineup.type}</span>
-          <span className={`tag tag-side tag-${lineup.side.toLowerCase()}`}>
-            {lineup.side}
-          </span>
-          <span className="tag tag-map">{mapName || 'Mapa'}</span>
-        </div>
+        <LineupTags lineup={lineup} mapName={mapName} />
         <h3 className="lineup-title">{lineup.title}</h3>
         {lineup.description && (
           <p className="lineup-desc">{lineup.description}</p>

@@ -1,5 +1,25 @@
 import CardActions from '../common/CardActions.jsx'
 
+function CalloutItem({ callout, index, active, onSelect, onEdit, onDelete }) {
+  return (
+    <li
+      className={active ? 'active' : ''}
+      onClick={() => onSelect(index)}
+    >
+      <span className="callout-number">{index + 1}</span>
+      <span className="callout-name">{callout.zone_name}</span>
+      <CardActions
+        as="span"
+        className="callout-actions"
+        item={callout}
+        onEdit={onEdit}
+        onDelete={onDelete}
+        stopPropagation
+      />
+    </li>
+  )
+}
+
 export default function CalloutList({
   callouts,
   selectedIndex,
@@ -17,22 +37,15 @@ export default function CalloutList({
       )}
       <ul>
         {callouts.map((callout, index) => (
-          <li
+          <CalloutItem
             key={callout.id}
-            className={index === selectedIndex ? 'active' : ''}
-            onClick={() => onSelect(index)}
-          >
-            <span className="callout-number">{index + 1}</span>
-            <span className="callout-name">{callout.zone_name}</span>
-            <CardActions
-              as="span"
-              className="callout-actions"
-              item={callout}
-              onEdit={onEdit}
-              onDelete={onDelete}
-              stopPropagation
-            />
-          </li>
+            callout={callout}
+            index={index}
+            active={index === selectedIndex}
+            onSelect={onSelect}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
         ))}
       </ul>
     </aside>

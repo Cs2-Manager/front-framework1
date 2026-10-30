@@ -1,98 +1,57 @@
-import { useEffect, useState } from 'react'
+import {
+  clearFieldErrors,
+  readFieldValue,
+  useFormFields,
+} from './formHelpers.js'
+import { createSubmitHandler } from './formSubmit.js'
 
-import { getErrorMessage } from '../utils/errors.js'
-
-/**
- * Estado y flujo de envío para formularios (modales y páginas de auth).
- *
- * @param {object} options
- * @param {object} [options.initial] - valores iniciales fijos.
- * @param {() => object} [options.buildInitial] - inicial derivado de props.
- * @param {boolean} [options.open] - si se define, reinicia cada vez que cambia.
- * @param {any[]} [options.deps] - dependencias adicionales que reinician el form.
- * @param {(values: object) => object} [options.validate] - errores por campo.
- * @param {(values: object) => Promise<any>} options.submit - petición de guardado.
- * @param {(result: any) => void} [options.onSuccess]
- * @param {string} [options.errorMessage] - mensaje por defecto si falla.
- */
-export default function useForm({
-  initial,
-  buildInitial,
-  open,
-  deps = [],
-  validate,
-  submit,
-  onSuccess,
-  errorMessage,
-}) {
+/** Estado local del formulario y actualización de valores/errores. */
+export function useFormState({ initial, buildInitial, open, deps = [] }) {
   const makeInitial = () => (buildInitial ? buildInitial() : initial)
-
-  const [form, setForm] = useState(makeInitial)
-  const [errors, setErrors] = useState({})
-  const [serverError, setServerError] = useState('')
-  const [submitting, setSubmitting] = useState(false)
-
-  useEffect(() => {
-    if (open !== undefined && !open) return
-    setForm(makeInitial())
-    setErrors({})
-    setServerError('')
-    setSubmitting(false)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, ...deps])
+  const fields = useFormFields({ makeInitial, open, deps })
 
   function updateValues(values) {
-    setForm((prev) => ({ ...prev, ...values }))
-    setErrors((prev) => {
-      const next = { ...prev }
-      for (const key of Object.keys(values)) next[key] = undefined
-      return next
-    })
+    fields.setForm((prev) => ({ ...prev, ...values }))
+    fields.setErrors((prev) => clearFieldErrors(prev, Object.keys(values)))
   }
 
   function handleChange(event) {
-    const { name, type, value, checked } = event.target
-    let next = value
-    if (type === 'checkbox') next = checked
-    else if (type === 'number') next = value === '' ? '' : Number(value)
-    updateValues({ [name]: next })
+    const { name } = event.target
+    updateValues({ [name]: readFieldValue(event.target) })
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault()
-    if (submitting) return
+  return { ...fields, updateValues, handleChange }
+}
 
-    const nextErrors = validate ? validate(form) : {}
-    if (nextErrors && Object.keys(nextErrors).length > 0) {
-      setErrors(nextErrors)
-      return
-    }
-
-    setSubmitting(true)
-    setServerError('')
-    try {
-      const result = await submit(form)
-      onSuccess?.(result)
-    } catch (err) {
-      const fields = err.response?.data?.fields
-      if (fields) {
-        setErrors(fields)
-      } else {
-        setServerError(getErrorMessage(err, errorMessage))
-      }
-    } finally {
-      setSubmitting(false)
-    }
-  }
+/**
+ * Estado y flujo de envío para formularios (modales y páginas de auth).
+ * Opciones: initial | buildInitial | open | deps | validate | submit |
+ * onSuccess | errorMessage.
+ */
+export default function useForm(options) {
+  const state = useFormState(options)
+  const handleSubmit = createSubmitHandler({
+    ...options,
+    getForm: () => state.form,
+    isSubmitting: () => state.submitting,
+    setErrors: state.setErrors,
+    setServerError: state.setServerError,
+    setSubmitting: state.setSubmitting,
+  })
 
   return {
-    form,
-    errors,
-    serverError,
-    submitting,
-    updateValues,
-    handleChange,
+    form: state.form,
+    errors: state.errors,
+    serverError: state.serverError,
+    submitting: state.submitting,
+    updateValues: state.updateValues,
+    handleChange: state.handleChange,
     handleSubmit,
-    modalProps: { open, serverError, submitting, onSubmit: handleSubmit },
+    modalProps: {
+      open: options.open,
+      serverError: state.serverError,
+      submitting: state.submitting,
+      onSubmit: handleSubmit,
+    },
   }
 }
