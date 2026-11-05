@@ -3,23 +3,23 @@
 
 > Documento **generado automáticamente** por la cátedra de Programación III (RepoSense + análisis de calidad + constancia). **No editar a mano**: se regenera en cada evaluación.
 > Rama evaluada: `main`. Análisis **heurístico** (regex + métricas): es una criba para orientar la revisión, **no una nota**.
-> Generado: 2026-11-03.
+> Generado: 2026-11-05.
 
 ## 1. Veredicto
 
 | Aspecto | Resultado |
 |---|---|
 | Tipo de proyecto | frontend |
-| Índice de calidad de servicios | **11/100** (mínimo 60) |
-| Criterios cumplidos | **11/14** |
-| Aprobado (semáforo) | **NO** |
-| Código (LOC) | 4,569 |
-| Archivos de código | 101 |
+| Índice de calidad de servicios | **77/100** (mínimo 50) |
+| Criterios cumplidos | **13/14** |
+| Aprobado (semáforo) | **SI** |
+| Código (LOC) | 3,614 |
+| Archivos de código | 82 |
 | Tests (archivos) | 19 |
-| Cobertura de líneas | no aplica (frontend sin herramienta de cobertura E2E) (mínimo 80%) |
+| Cobertura de líneas | no aplica (frontend sin herramienta de cobertura E2E) |
 | Capas detectadas | vistas, servicios, estado |
 
-> **Aprobado** exige cumplir **todos** los criterios del semáforo. No es una nota: sirve para ordenar y priorizar la revisión.
+> **Aprobado** exige las compuertas críticas (**SEC**, **SQL**, **capas**, **índice ≥ 50** y **cobertura ≥ 80 %** cuando aplica) y tolera hasta **3 criterios en rojo** (12/15). No es una nota: sirve para ordenar y priorizar la revisión.
 
 ## 2. Autoría (RepoSense)
 
@@ -35,7 +35,7 @@
 
 | Alumno | Sesiones | Cumplimiento | Pausa | Recencia | IC | Nivel | Para subir de nivel |
 |---|--:|--:|--:|--:|--:|--|--|
-| Gaspar Giménez | 4 | 18% | 26 d | 0% | **12** | No aprueba | Cumplimiento 18% (mín. 50%); Pausa 26 d (máx. 10 d); Recencia 0% (mín. 50%) |
+| Gaspar Giménez | 5 | 22% | 30 d | 57% | **22** | No aprueba | Cumplimiento 22% (mín. 50%) |
 
 > Para aprobar el IC: **2 sesiones por semana** sostenidas, sin pausas mayores a **10 días** y con actividad en las **últimas 2 semanas**. Se excluyen merges, bots y al docente. Zona horaria UTC-3.
 
@@ -43,31 +43,23 @@
 
 Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuando el resultado está en rojo, se agregan preguntas para **investigar la causa** (no hay recetas: entender el porqué es parte de la evaluación).
 
-### 1. Índice de calidad de servicios (indice) — A REVISAR
+### 1. Índice de calidad de servicios (indice) — OK
 
 - **Qué mide:** Un resumen numérico (0-100) que combina todas las señales y métricas del análisis, con topes duros por duplicación.
 - **Por qué importa:** Ordena y prioriza la revisión: un índice bajo indica varias señales que conviene mirar juntas.
-- **Tu resultado:** índice **11/100** _(mínimo 60)_
-- **Para investigar la causa:**
-    - ¿En qué momento del proyecto se concentraron los problemas (arranque, integración de partes, cierre)?
-    - ¿El índice bajó por muchas señales chicas o por una o dos graves?
-    - ¿Se revisó el código integrado después de unir el trabajo de cada integrante?
+- **Tu resultado:** índice **77/100** _(mínimo 50)_
 
 ### 2. Duplicación (DRY) (duplicacion) — OK
 
 - **Qué mide:** Porcentaje de bloques de código repetidos (similitud) en el repositorio.
 - **Por qué importa:** Cada copia se mantiene por separado: un arreglo hay que repetirlo y los defectos se multiplican.
-- **Tu resultado:** **12.9%** de duplicación _(máximo 15%)_
+- **Tu resultado:** **13.8%** de duplicación _(máximo 15%)_
 
-### 3. Secretos hardcodeados (SEC) — A REVISAR
+### 3. Secretos hardcodeados (SEC) — OK
 
 - **Qué mide:** Credenciales, tokens o claves escritos directamente en el código en vez de leerse de variables de entorno.
 - **Por qué importa:** Un secreto en el repositorio queda expuesto en el historial aunque luego se borre, y compromete al servicio y a sus usuarios.
-- **Tu resultado:** **5** secreto(s) hardcodeado(s) _(máximo 0)_
-- **Para investigar la causa:**
-    - ¿De dónde salió ese valor: un ejemplo, una prueba rápida, una copia de un compañero?
-    - ¿En qué momento entró al código y por qué no se sacó antes de cerrar la tarea?
-    - ¿Se acordó cómo manejar credenciales antes de empezar, o se postergó para el final?
+- **Tu resultado:** **0** secreto(s) hardcodeado(s) _(máximo 0)_
 
 ### 4. Consultas SQL por concatenación (SQL) — OK
 
@@ -119,13 +111,13 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Complejidad ciclomática: cantidad de caminos posibles dentro de una función (condicionales, bucles, casos).
 - **Por qué importa:** Muchos caminos = difícil de seguir y de probar; suelen esconderse casos sin cubrir.
-- **Tu resultado:** **9** bloque(s) de complejidad alta _(máximo 5 por 1000 LOC (tenés 4569 LOC))_
+- **Tu resultado:** **9** bloque(s) de complejidad alta _(máximo 5 por 1000 LOC (tenés 3614 LOC))_
 
 ### 12. Funciones/métodos largos o con muchos parámetros (Tam) — OK
 
 - **Qué mide:** Tamaño de las funciones/métodos y cantidad de parámetros.
 - **Por qué importa:** Una función que hace varias cosas cuesta leerla, nombrarla y reutilizarla.
-- **Tu resultado:** **34** función/método(s) largos o con muchos parámetros _(máximo 10 por 1000 LOC)_
+- **Tu resultado:** **18** función/método(s) largos o con muchos parámetros _(máximo 10 por 1000 LOC)_
 
 ### 13. Acoplamiento alto (Acop) — OK
 
@@ -137,28 +129,19 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Cantidad de vistas/componentes de pantalla del frontend.
 - **Por qué importa:** El frontend se mide por pantallas: pocas vistas sugiere poca cobertura de la interfaz pedida.
-- **Tu resultado:** **62** vista(s)/componente(s) _(mínimo 8)_
+- **Tu resultado:** **62** vista(s)/componente(s) _(mínimo 6)_
 
-## 5. Qué falta para aprobar
+## 5. Observaciones y qué falta
 
-Criterios que hoy están en rojo y, para cada uno, una explicación breve de **cómo corregirlo** hasta alcanzar el nivel de aprobación (perfil `exigente`):
+**Aprobado con observaciones.** Estos criterios quedan en rojo (se permiten hasta **3** sin que sean compuertas críticas), así que no bloquean la aprobación pero conviene corregirlos:
 
-| Criterio | Resultado actual | Meta | Cómo corregirlo |
-|---|---|---|---|
-| Índice de calidad de servicios (indice) | índice **11/100** | mínimo 60 | El índice es un resumen: sube al corregir los criterios en rojo. Empezá por los de más peso (duplicación ≤15%, SEC y SQL en 0, capas ≥2) y volvé a medir; la meta es ≥60. |
-| Secretos hardcodeados (SEC) | **5** secreto(s) hardcodeado(s) | máximo 0 | Sacá el valor del código y leelo de una variable de entorno (`.env` no versionado) o del gestor de secretos; si la credencial estuvo publicada, rotala. Meta: 0 casos. |
-| Componente demasiado grande (BigC) | **3** componente(s) demasiado grande(s) | máximo 1 | Dividí el componente por responsabilidad en subcomponentes (render, estado, acceso a datos) y dejá el original sólo como orquestador. Meta: ≤1 componente grande. |
-
-> Empezá por las señales de seguridad (**SEC**, **SQL**) y por la **duplicación**: son las que más pesan en el índice y las más rápidas de verificar a ojo. Después de corregir, volvé a correr la medición: el semáforo se recalcula sobre `main`.
+| Criterio | Resultado actual | Meta | Brecha | Cómo alcanzarlo |
+|---|---|---|---|---|
+| Componente demasiado grande (BigC) | **3** componente(s) demasiado grande(s) | máximo 1 | 2 componente(s) de más | Dividí el componente por responsabilidad en subcomponentes (render, estado, acceso a datos) y dejá el original sólo como orquestador. Meta: ≤1 componente grande. |
 
 ## 6. Anexo: dónde mirar
 
 Archivos donde el análisis encontró cada señal en rojo (sin número de línea, a propósito):
-
-**Secretos hardcodeados (SEC)** — 3 archivo(s):
-- `src/components/auth/authValidation.js`
-- `src/pages/Login.jsx`
-- `src/pages/Register.jsx`
 
 **Componente demasiado grande (BigC)** — 3 archivo(s):
 - `src/components/layout/Navbar.jsx`
