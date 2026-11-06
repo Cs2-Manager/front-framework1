@@ -1,0 +1,23 @@
+.tactical-board svg { width: 100%; max-height: 75vh; background: #090e16; border: 1px solid #405574; border-radius: 12px; touch-action: none; }
+.tactical-toolbar, .tactical-coordinates { display: flex; flex-wrap: wrap; align-items: end; gap: .6rem; margin: 1rem 0; }
+.strategy-editor { padding: 1rem; border: 1px solid #3e5977; border-radius: 16px; background: #101824; margin-top: 1rem; }
+.strategy-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; border: 0; padding: 0; }
+.strategy-editor label, .tactical-toolbar label, .preparation-form label { display: grid; gap: .4rem; margin-bottom: .6rem; }
+.strategy-editor input, .strategy-editor select, .strategy-editor textarea, .tactical-toolbar input, .tactical-toolbar select, .preparation-form input, .preparation-form select, .preparation-form textarea { background: #0b111b; color: #e5edf8; border: 1px solid #536a85; border-radius: 6px; min-height: 44px; padding: .5rem; max-width: 100%; }
+.strategy-editor button, .tactical-toolbar button, .preparation-form button { background: #243c58; color: #fff; padding: .7rem; border: 1px solid #607c9a; border-radius: 6px; min-height: 44px; cursor: pointer; }
+.strategy-editor button:disabled { opacity: .5; cursor: default; }
+.callout-label { fill: white; stroke: #101824; stroke-width: 3px; paint-order: stroke; font-size: 19px; }
+.selected-element { filter: drop-shadow(0 0 6px #5ecaff); }
+.tactical-inspector { padding: 1rem; background: #1a2637; border-radius: 10px; }
+.map-tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.5rem 0; }
+.map-tabs button[aria-pressed=true] { background: #27577c; color: white; }
+.phase8-panel button { display: inline-flex; justify-content: center; align-items: center; gap: .4rem; background: #21354d; color: #f4f7fc; padding: .65rem .9rem; margin: .2rem; min-height: 44px; border: 1px solid #4b6685; border-radius: 8px; cursor: pointer; transition: background .15s ease; }
+.phase8-panel button:hover { background: #2b4c6f; }
+.phase8-panel button:disabled { opacity: .5; cursor: default; }
+.phase8-panel .team-lineups-grid > article { border-top: 3px solid #e6b75a; }
+.phase8-panel fieldset { border: 1px solid #344a64; border-radius: 10px; padding: .9rem; margin: .7rem 0; min-width: 0; }
+.phase8-panel legend { color: #b9d4f0; padding: 0 .35rem; }
+.phase8-panel textarea { width: 100%; min-height: 90px; }
+.phase8-panel :focus-visible { outline: 2px solid #65cfff; outline-offset: 3px; }
+.strategy-editor :focus-visible, .map-tabs :focus-visible { outline: 2px solid #65cfff; outline-offset: 3px; }
+@media (max-width: 600px) { .strategy-editor { padding: .6rem; } .strategy-fields { grid-template-columns: 1fr; } }

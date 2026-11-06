@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 
 /**
  * Estado de los menús de la navbar: dropdown de perfil y menú móvil.
- * Cierra ambos al cambiar de ruta y el dropdown al hacer clic fuera.
+ * Cierra ambos al cambiar de ruta, el dropdown al hacer clic fuera y
+ * cualquiera de los dos con Escape.
  */
 export default function useNavbarMenu(pathname) {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -24,6 +25,29 @@ export default function useNavbarMenu(pathname) {
     document.addEventListener('mousedown', handleClick)
     return () => document.removeEventListener('mousedown', handleClick)
   }, [menuOpen])
+
+  useEffect(() => {
+    if (!menuOpen && !mobileOpen) return undefined
+
+    function handleKeyDown(event) {
+      if (event.key === 'Escape') {
+        setMenuOpen(false)
+        setMobileOpen(false)
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [menuOpen, mobileOpen])
+
+  useEffect(() => {
+    if (!mobileOpen) return undefined
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [mobileOpen])
 
   return { menuOpen, setMenuOpen, mobileOpen, setMobileOpen, menuRef }
 }

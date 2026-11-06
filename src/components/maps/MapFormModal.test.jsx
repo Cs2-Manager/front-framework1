@@ -134,6 +134,12 @@ describe('MapFormModal', () => {
         name: 'Inferno',
         image_url: 'https://x/i.jpg',
         active_pool: true,
+        category: 'COMPETITIVE',
+        status: 'ACTIVE',
+        release_date: null,
+        image_source: null,
+        top_down_source: null,
+        visual_version: 1,
       }),
     )
     await waitFor(() =>

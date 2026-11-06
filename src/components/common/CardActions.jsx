@@ -4,6 +4,7 @@
  * @param {object} props
  * @param {(item: any) => void} props.onEdit
  * @param {(item: any) => void} [props.onDelete]
+ * @param {(item: any) => void} [props.onRestore]
  * @param {any} props.item - elemento sobre el que operan los botones.
  * @param {boolean} [props.stopPropagation] - detiene el click del contenedor.
  * @param {string} [props.className]
@@ -12,6 +13,8 @@
 export default function CardActions({
   onEdit,
   onDelete,
+  onRestore,
+  restoreBusy = false,
   item,
   stopPropagation = false,
   className = 'card-actions',
@@ -26,6 +29,16 @@ export default function CardActions({
   return (
     <Tag className={className}>
       {children}
+      {onRestore && (
+        <button
+          type="button"
+          className="btn btn-ghost btn-sm"
+          onClick={run(onRestore)}
+          disabled={restoreBusy}
+        >
+          {restoreBusy ? 'Restaurando…' : 'Restaurar'}
+        </button>
+      )}
       <button
         type="button"
         className="btn btn-ghost btn-sm"

@@ -1,0 +1,288 @@
+/* ==========================================================================
+   FACEIT — Data API v4 y FACEIT Connect
+   Capa visual independiente de Steam y matchmaking. Solo agrega clases.
+   ========================================================================== */
+
+.faceit-card {
+  display: grid;
+  gap: 1rem;
+}
+
+.faceit-card .player-panel-head {
+  margin-bottom: 0;
+}
+
+.faceit-identity,
+.faceit-preview {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.faceit-avatar {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  border-radius: 14px;
+  overflow: hidden;
+  color: #ffd0b8;
+  background: linear-gradient(135deg, #2a1309, #7a2a0b);
+  border: 1px solid rgba(255, 85, 0, 0.45);
+}
+
+.faceit-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.faceit-identity-copy {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.faceit-nickname {
+  margin: 0;
+  font-weight: 700;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.faceit-meta {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  overflow-wrap: anywhere;
+}
+
+.faceit-meta code {
+  color: var(--color-muted-strong);
+  font-size: 0.78rem;
+}
+
+.faceit-link {
+  color: #ff8a4d;
+  font-size: 0.85rem;
+}
+
+.faceit-sync {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0.85rem;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: rgba(10, 16, 26, 0.55);
+}
+
+.faceit-sync > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.82rem;
+}
+
+.faceit-sync dt {
+  color: var(--color-muted);
+}
+
+.faceit-sync dd {
+  margin: 0;
+  color: var(--color-text);
+  text-align: right;
+}
+
+.faceit-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.faceit-card-actions .btn {
+  flex: 1 1 150px;
+}
+
+.faceit-discovery {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.9rem;
+  border: 1px solid rgba(255, 85, 0, 0.35);
+  border-radius: 12px;
+  background: rgba(255, 85, 0, 0.06);
+}
+
+.faceit-subhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.35rem;
+}
+
+.faceit-subhead h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-muted-strong);
+}
+
+.faceit-stats-block {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.faceit-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
+  gap: 0.55rem;
+  margin: 0;
+}
+
+.faceit-stat {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.faceit-stat dt {
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.faceit-stat dd {
+  margin: 0;
+  color: var(--color-text);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.faceit-empty {
+  padding: 0.85rem 1rem;
+  border: 1px dashed var(--color-border);
+  border-radius: 10px;
+  color: var(--color-muted);
+  background: rgba(255, 255, 255, 0.02);
+  line-height: 1.55;
+}
+
+.faceit-empty p {
+  margin: 0;
+}
+
+.faceit-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+}
+
+.faceit-table {
+  width: 100%;
+  min-width: 640px;
+  margin: 0;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.faceit-table th,
+.faceit-table td {
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.faceit-table th {
+  color: var(--color-muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.faceit-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.faceit-table tbody tr:hover {
+  background: rgba(255, 85, 0, 0.05);
+}
+
+.faceit-elo {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.faceit-elo-current {
+  margin: 0;
+  color: var(--color-text);
+}
+
+.faceit-elo-current strong {
+  color: #ff8a4d;
+  font-size: 1.15rem;
+}
+
+.faceit-elo-list {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.faceit-elo-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+}
+
+.faceit-elo-list strong {
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.faceit-note {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .faceit-card-actions .btn {
+    flex: 1 1 100%;
+  }
+
+  .faceit-identity,
+  .faceit-preview {
+    align-items: flex-start;
+  }
+
+  .faceit-sync > div {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .faceit-sync dd {
+    text-align: left;
+  }
+}

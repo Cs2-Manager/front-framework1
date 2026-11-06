@@ -1,4 +1,5 @@
 export const EMPTY_CALLOUT_FORM = { zone_name: '', x_ratio: 0.5, y_ratio: 0.5 }
+const metadata = value => Object.fromEntries(['zone', 'description', 'image_url', 'status'].filter(k => k in value).map(k => [k, value[k] || '']))
 
 export function calloutToForm(callout) {
   if (!callout) return EMPTY_CALLOUT_FORM
@@ -6,6 +7,7 @@ export function calloutToForm(callout) {
     zone_name: callout.zone_name,
     x_ratio: callout.x_ratio,
     y_ratio: callout.y_ratio,
+    ...metadata(callout),
   }
 }
 
@@ -23,6 +25,7 @@ export function buildCalloutPayload(values) {
     zone_name: values.zone_name.trim(),
     x_ratio: values.x_ratio,
     y_ratio: values.y_ratio,
+    ...metadata(values),
   }
 }
 

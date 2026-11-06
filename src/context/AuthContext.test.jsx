@@ -111,4 +111,36 @@ describe('AuthContext', () => {
     )
     expect(localStorage.getItem(AUTH_TOKEN_KEY)).toBeNull()
   })
+
+  it('stores a session issued by Steam', () => {
+    function SteamConsumer() {
+      const { user, loginWithToken } = useAuth()
+      return (
+        <div>
+          <span data-testid="steam-status">
+            {user?.username || 'anonymous'}
+          </span>
+          <button
+            type="button"
+            onClick={() =>
+              loginWithToken('tok-steam', { username: 'steam-player' })
+            }
+          >
+            Entrar con Steam
+          </button>
+        </div>
+      )
+    }
+
+    render(
+      <AuthProvider>
+        <SteamConsumer />
+      </AuthProvider>,
+    )
+
+    fireEvent.click(screen.getByRole('button', { name: 'Entrar con Steam' }))
+
+    expect(screen.getByTestId('steam-status')).toHaveTextContent('steam-player')
+    expect(localStorage.getItem(AUTH_TOKEN_KEY)).toBe('tok-steam')
+  })
 })

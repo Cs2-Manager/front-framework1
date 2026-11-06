@@ -21,7 +21,7 @@ export default function useLoginForm() {
     validate: validateLogin,
     submit: (values) =>
       login({ email: values.email, password: values.password }),
-    onSuccess: () => navigate(from || '/profile', { replace: true }),
+    onSuccess: () => navigate(from || '/', { replace: true }),
     errorMessage: 'No se pudo iniciar sesión. Intentalo de nuevo.',
   })
 

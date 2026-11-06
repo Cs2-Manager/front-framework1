@@ -1,85 +1,77 @@
-﻿import { useAuth } from '../context/AuthContext.jsx'
-import ProfileHeader from '../components/profile/ProfileHeader.jsx'
-import ProfileActions from '../components/profile/ProfileActions.jsx'
-import StatCard from '../components/profile/StatCard.jsx'
+﻿import { useLocation } from 'react-router-dom'
+
+import Alert from '../components/common/Alert.jsx'
+import ErrorState from '../components/common/ErrorState.jsx'
+import LoadingState from '../components/common/LoadingState.jsx'
+import ProfileView from '../components/profile/ProfileView.jsx'
 import {
-  AccountIcon,
-  CalendarIcon,
-  IdIcon,
-  MailIcon,
-} from '../components/profile/icons.jsx'
-
-function formatDate(value) {
-  if (!value) return 'No disponible'
-  const date = new Date(value)
-  if (Number.isNaN(date.getTime())) return 'No disponible'
-  return date.toLocaleDateString('es-ES', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
-}
-
-function buildStats(user) {
-  return [
-    { icon: <AccountIcon />, value: user.username, label: 'Nombre de usuario' },
-    { icon: <MailIcon />, value: user.email, label: 'Correo electrónico' },
-    { icon: <IdIcon />, value: `#${user.id}`, label: 'Identificador' },
-    {
-      icon: <CalendarIcon />,
-      value: formatDate(user.created_at),
-      label: 'Miembro desde',
-    },
-  ]
-}
-
-function ProfileLoading() {
-  return (
-    <div className="page container page-profile">
-      <div className="profile-loading" role="status" aria-live="polite">
-        <span className="spinner" aria-hidden="true" />
-        <p>Cargando perfil…</p>
-      </div>
-    </div>
-  )
-}
-
-function ProfileStats({ user }) {
-  return (
-    <div className="profile-stats">
-      {buildStats(user).map((stat) => (
-        <StatCard key={stat.label} {...stat} />
-      ))}
-    </div>
-  )
-}
-
-function ProfileSections({ user, onLogout }) {
-  return (
-    <div className="profile-content">
-      <section className="profile-section">
-        <h2>Información de la cuenta</h2>
-        <ProfileStats user={user} />
-      </section>
-      <section className="profile-section">
-        <h2>Acciones</h2>
-        <ProfileActions onLogout={onLogout} />
-      </section>
-    </div>
-  )
-}
+  FACEIT_CALLBACK_MESSAGES,
+  FACEIT_ERROR_REASONS,
+} from '../components/faceit/faceitMessages.js'
+import { useAuth } from '../context/AuthContext.jsx'
+import { useOwnProfile } from '../hooks/useProfile.js'
 
 export default function Profile() {
-  const { user, logout } = useAuth()
-
-  if (!user) return <ProfileLoading />
+  const { logout } = useAuth()
+  const location = useLocation()
+  const { data, loading, error, reload } = useOwnProfile()
+  const updated = Boolean(location.state?.updated)
+  const steamIntent = location.state?.steamIntent
+  const steamCreated = Boolean(location.state?.steamCreated)
+  const faceitParams = new URLSearchParams(location.search)
+  const faceitResult = faceitParams.get('faceit')
+  const faceitReason = faceitParams.get('reason')
+  const faceitMessage = FACEIT_CALLBACK_MESSAGES[faceitResult]
 
   return (
-    <div className="page container page-profile">
-      <div className="profile-card fade-in-up">
-        <ProfileHeader user={user} onLogout={logout} />
-        <ProfileSections user={user} onLogout={logout} />
-      </div>
+    <div className="page container">
+      {updated && (
+        <Alert variant="success">Perfil actualizado correctamente.</Alert>
+      )}
+
+      {faceitResult && faceitMessage && (
+        <Alert variant={faceitMessage.variant}>
+          {faceitMessage.text}
+          {faceitReason
+            ? ` ${FACEIT_ERROR_REASONS[faceitReason] || ''}`.trimEnd()
+            : ''}
+        </Alert>
+      )}
+
+      {steamIntent && (
+        <Alert variant="success">
+          {steamIntent === 'LINK'
+            ? 'Cuenta de Steam vinculada correctamente. Ya podés sincronizar tus datos verificados.'
+            : steamCreated
+              ? 'Creamos tu cuenta a partir de Steam. Completá tu perfil competitivo cuando quieras.'
+              : 'Iniciaste sesión con Steam correctamente.'}
+        </Alert>
+      )}
+
+      {loading && (
+        <LoadingState
+          label="Cargando tu perfil…"
+          detail="Estamos preparando tu identidad competitiva."
+          cards={2}
+        />
+      )}
+
+      {!loading && error && (
+        <ErrorState
+          label="Error del perfil"
+          message={error}
+          onRetry={reload}
+        />
+      )}
+
+      {!loading && !error && data && (
+        <ProfileView
+          profile={data}
+          owner
+          onLogout={logout}
+          onProfileChange={reload}
+        />
+      )}
     </div>
   )
 }
