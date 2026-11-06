@@ -3,19 +3,19 @@
 
 > Documento **generado automáticamente** por la cátedra de Programación III (RepoSense + análisis de calidad + constancia). **No editar a mano**: se regenera en cada evaluación.
 > Rama evaluada: `main`. Análisis **heurístico** (regex + métricas): es una criba para orientar la revisión, **no una nota**.
-> Generado: 2026-11-05.
+> Generado: 2026-11-06.
 
 ## 1. Veredicto
 
 | Aspecto | Resultado |
 |---|---|
 | Tipo de proyecto | frontend |
-| Índice de calidad de servicios | **77/100** (mínimo 50) |
-| Criterios cumplidos | **13/14** |
-| Aprobado (semáforo) | **SI** |
-| Código (LOC) | 3,614 |
-| Archivos de código | 82 |
-| Tests (archivos) | 19 |
+| Índice de calidad de servicios | **29/100** (mínimo 50) |
+| Criterios cumplidos | **12/14** |
+| Aprobado (semáforo) | **NO** |
+| Código (LOC) | 13,364 |
+| Archivos de código | 193 |
+| Tests (archivos) | 63 |
 | Cobertura de líneas | no aplica (frontend sin herramienta de cobertura E2E) |
 | Capas detectadas | vistas, servicios, estado |
 
@@ -25,7 +25,7 @@
 
 | Autor | Commits | Código (LOC) | Tests (LOC) | Docs (LOC) | Días activos | % del código |
 |---|---:|---:|---:|---:|---:|---:|
-| Gaspar Giménez | 7 | 2,998 | 843 | 0 | 7 | 100% |
+| Gaspar Giménez | 9 | 20,871 | 6,694 | 0 | 8 | 100% |
 
 > _El LOC de autoría lo calcula RepoSense sobre el historial y puede diferir del LOC de código del análisis de calidad (que mira solo el estado de `main`)._
 
@@ -43,17 +43,21 @@
 
 Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuando el resultado está en rojo, se agregan preguntas para **investigar la causa** (no hay recetas: entender el porqué es parte de la evaluación).
 
-### 1. Índice de calidad de servicios (indice) — OK
+### 1. Índice de calidad de servicios (indice) — A REVISAR
 
 - **Qué mide:** Un resumen numérico (0-100) que combina todas las señales y métricas del análisis, con topes duros por duplicación.
 - **Por qué importa:** Ordena y prioriza la revisión: un índice bajo indica varias señales que conviene mirar juntas.
-- **Tu resultado:** índice **77/100** _(mínimo 50)_
+- **Tu resultado:** índice **29/100** _(mínimo 50)_
+- **Para investigar la causa:**
+    - ¿En qué momento del proyecto se concentraron los problemas (arranque, integración de partes, cierre)?
+    - ¿El índice bajó por muchas señales chicas o por una o dos graves?
+    - ¿Se revisó el código integrado después de unir el trabajo de cada integrante?
 
 ### 2. Duplicación (DRY) (duplicacion) — OK
 
 - **Qué mide:** Porcentaje de bloques de código repetidos (similitud) en el repositorio.
 - **Por qué importa:** Cada copia se mantiene por separado: un arreglo hay que repetirlo y los defectos se multiplican.
-- **Tu resultado:** **13.8%** de duplicación _(máximo 15%)_
+- **Tu resultado:** **5.7%** de duplicación _(máximo 15%)_
 
 ### 3. Secretos hardcodeados (SEC) — OK
 
@@ -95,7 +99,7 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Componentes de UI muy extensos, que suelen mezclar render, estado y lógica.
 - **Por qué importa:** Son difíciles de leer, probar y reutilizar, y sus cambios tienen efectos inesperados.
-- **Tu resultado:** **3** componente(s) demasiado grande(s) _(máximo 1)_
+- **Tu resultado:** **17** componente(s) demasiado grande(s) _(máximo 1)_
 - **Para investigar la causa:**
     - ¿El componente creció a medida que se agregaban requisitos, sin volver a dividirlo?
     - ¿Mezcla responsabilidades distintas (mostrar, calcular, pedir datos)?
@@ -111,13 +115,13 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Complejidad ciclomática: cantidad de caminos posibles dentro de una función (condicionales, bucles, casos).
 - **Por qué importa:** Muchos caminos = difícil de seguir y de probar; suelen esconderse casos sin cubrir.
-- **Tu resultado:** **9** bloque(s) de complejidad alta _(máximo 5 por 1000 LOC (tenés 3614 LOC))_
+- **Tu resultado:** **66** bloque(s) de complejidad alta _(máximo 5 por 1000 LOC (tenés 13364 LOC))_
 
 ### 12. Funciones/métodos largos o con muchos parámetros (Tam) — OK
 
 - **Qué mide:** Tamaño de las funciones/métodos y cantidad de parámetros.
 - **Por qué importa:** Una función que hace varias cosas cuesta leerla, nombrarla y reutilizarla.
-- **Tu resultado:** **18** función/método(s) largos o con muchos parámetros _(máximo 10 por 1000 LOC)_
+- **Tu resultado:** **81** función/método(s) largos o con muchos parámetros _(máximo 10 por 1000 LOC)_
 
 ### 13. Acoplamiento alto (Acop) — OK
 
@@ -129,24 +133,41 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Cantidad de vistas/componentes de pantalla del frontend.
 - **Por qué importa:** El frontend se mide por pantallas: pocas vistas sugiere poca cobertura de la interfaz pedida.
-- **Tu resultado:** **62** vista(s)/componente(s) _(mínimo 6)_
+- **Tu resultado:** **156** vista(s)/componente(s) _(mínimo 6)_
 
 ## 5. Observaciones y qué falta
 
-**Aprobado con observaciones.** Estos criterios quedan en rojo (se permiten hasta **3** sin que sean compuertas críticas), así que no bloquean la aprobación pero conviene corregirlos:
+Criterios que hoy están en rojo y, para cada uno, una explicación breve de **cómo corregirlo** hasta alcanzar el nivel de aprobación (perfil `exigente`):
 
 | Criterio | Resultado actual | Meta | Brecha | Cómo alcanzarlo |
 |---|---|---|---|---|
-| Componente demasiado grande (BigC) | **3** componente(s) demasiado grande(s) | máximo 1 | 2 componente(s) de más | Dividí el componente por responsabilidad en subcomponentes (render, estado, acceso a datos) y dejá el original sólo como orquestador. Meta: ≤1 componente grande. |
+| Índice de calidad de servicios (indice) | índice **29/100** | mínimo 50 | faltan 21 pts | El índice sólo penaliza lo que **excede** los umbrales de cada criterio: si tenés todo en verde, el índice es 100. Si está en rojo, mirá la columna **Brecha** y los criterios en rojo; corregí primero duplicación, SEC, SQL y capas. Meta del perfil exigente: ≥50. |
+| Componente demasiado grande (BigC) | **17** componente(s) demasiado grande(s) | máximo 1 | 16 componente(s) de más | Dividí el componente por responsabilidad en subcomponentes (render, estado, acceso a datos) y dejá el original sólo como orquestador. Meta: ≤1 componente grande. |
+
+> Empezá por las señales de seguridad (**SEC**, **SQL**) y por la **duplicación**: son las que más pesan en el índice y las más rápidas de verificar a ojo. Después de corregir, volvé a correr la medición: el semáforo se recalcula sobre `main`.
 
 ## 6. Anexo: dónde mirar
 
 Archivos donde el análisis encontró cada señal en rojo (sin número de línea, a propósito):
 
-**Componente demasiado grande (BigC)** — 3 archivo(s):
-- `src/components/layout/Navbar.jsx`
-- `src/pages/Login.jsx`
-- `src/pages/Register.jsx`
+**Componente demasiado grande (BigC)** — 17 archivo(s):
+- `src/components/faceit/FaceitAccountCard.jsx`
+- `src/components/faceit/FaceitLinkCard.jsx`
+- `src/components/maps/GrenadeCard.jsx`
+- `src/components/maps/GrenadeEditor.jsx`
+- `src/components/maps/GrenadeFormModal.jsx`
+- `src/components/maps/GrenadeLibrary.jsx`
+- `src/components/matchmaking/MatchmakingHistory.jsx`
+- `src/components/matchmaking/MatchmakingSection.jsx`
+- `src/components/profile/ProfileForm.jsx`
+- `src/components/profile/icons.jsx`
+- `src/components/steam/SteamAccountCard.jsx`
+- `src/components/teams/TeamGrenadeProposals.jsx`
+- `src/pages/Home.jsx`
+- `src/pages/Maps.jsx`
+- `src/pages/TeamDetail.jsx`
+- `src/pages/TeamLineupDetail.jsx`
+- `src/pages/TeamLineups.jsx`
 
 ---
 _Informe generado por la cátedra. Los umbrales corresponden al perfil `exigente`. Ante dudas, revisá el archivo señalado y el criterio en `CRITERIOS-CALIDAD.md`._
