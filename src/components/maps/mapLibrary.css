@@ -1,0 +1,7 @@
+.map-library-filters { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.5rem 0; padding: 1.2rem; border: 1px solid #344254; border-radius: 14px; background: #151c28; }
+.map-library-filters label { display: grid; gap: .5rem; flex: 1 1 180px; color: #dce6f4; }
+.map-library-filters input, .map-library-filters select { width: 100%; min-height: 44px; border: 1px solid #526078; border-radius: 8px; background: #0c121c; color: #f1f5fa; padding: .6rem; }
+.map-library-filters :focus-visible { outline: 2px solid #69c8ff; outline-offset: 3px; }
+.map-library-description { color: #b9c8db; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+.map-card .map-library-description { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.map-library-radar { width: 90px; height: 90px; object-fit: contain; border-radius: 8px; margin-bottom: 1rem; }

@@ -1,13 +1,29 @@
+# Stack del frontend: nginx sirve el build de React (multi-stage node → nginx)
+# y hace de proxy inverso de /api/ hacia el backend del stack back/ mediante
+# la red externa compartida "cs2-network".
+#
+# Es el ÚNICO punto de entrada HTTP expuesto a la LAN (puerto 80). Levantar
+# después del stack del backend (back/).
+#
+# No requiere variables de entorno en ejecución: la SPA consume la API con la
+# ruta relativa /api (front/.env solo define VITE_API_URL opcional en build).
+
 services:
   frontend:
     build: .
+    restart: unless-stopped
     ports:
       - "80:80"
-    environment:
-      - VITE_API_URL=http://localhost:5000/api
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
-      - app-network
+      - cs2-network
 
+# Red externa compartida con el stack del backend. Crearla una sola vez:
+#   docker network create cs2-network
 networks:
-  app-network:
-    driver: bridge
+  cs2-network:
+    external: true

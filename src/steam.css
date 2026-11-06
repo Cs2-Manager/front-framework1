@@ -1,0 +1,240 @@
+/* ==========================================================================
+   Fase 6 — Integración con Steam
+   Capa visual cargada después de phase4.css. Solo agrega clases nuevas.
+   ========================================================================== */
+
+.btn-steam {
+  background: linear-gradient(135deg, #1b2838 0%, #2a475e 100%);
+  border: 1px solid rgba(102, 192, 244, 0.45);
+  color: #eaf6ff;
+  gap: 0.55rem;
+}
+
+.btn-steam:hover {
+  background: linear-gradient(135deg, #22344a 0%, #356080 100%);
+  border-color: rgba(102, 192, 244, 0.75);
+}
+
+.btn-steam:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.steam-login-block {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 1.2rem;
+}
+
+.steam-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.steam-divider::before,
+.steam-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.steam-login-note,
+.steam-card-note {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.steam-card {
+  display: grid;
+  gap: 1rem;
+}
+
+.steam-card .player-panel-head {
+  margin-bottom: 0;
+}
+
+.steam-account {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.steam-avatar {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  border-radius: 14px;
+  overflow: hidden;
+  color: #9fd8ff;
+  background: linear-gradient(135deg, #1b2838, #2a475e);
+  border: 1px solid rgba(102, 192, 244, 0.35);
+}
+
+.steam-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.steam-account-copy {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.steam-persona {
+  margin: 0;
+  font-weight: 700;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.steam-profile-link {
+  color: #66c0f4;
+  font-size: 0.85rem;
+}
+
+.steam-account-meta {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+
+.steam-account-meta code {
+  color: var(--color-muted-strong);
+  font-size: 0.78rem;
+}
+
+.steam-sync-summary {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.8rem;
+  border-radius: var(--radius-sm);
+  background: rgba(10, 16, 26, 0.55);
+  border: 1px solid var(--color-border);
+}
+
+.steam-sync-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.82rem;
+  color: var(--color-muted);
+}
+
+.steam-sync-row > span:last-child {
+  color: var(--color-text);
+  text-align: right;
+}
+
+.steam-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.steam-card-actions .btn {
+  flex: 1 1 140px;
+}
+
+.steam-cs2-panel .player-panel-head {
+  align-items: center;
+}
+
+.steam-cs2-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 1rem;
+}
+
+.steam-cs2-row {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+  background: rgba(10, 16, 26, 0.55);
+  border: 1px solid var(--color-border);
+}
+
+.steam-cs2-row dt {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.steam-cs2-row dd {
+  margin: 0;
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.steam-cs2-stats {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.steam-cs2-stats h3 {
+  margin: 0 0 0.25rem;
+  font-size: 0.95rem;
+}
+
+.steam-cs2-stats p {
+  margin: 0;
+  font-size: 0.82rem;
+}
+
+.steam-source-badge {
+  white-space: nowrap;
+}
+
+.profile-edit-stack {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.steam-callback-error {
+  display: grid;
+  gap: 1rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.steam-callback-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+@media (max-width: 640px) {
+  .steam-cs2-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .steam-cs2-stats {
+    flex-direction: column;
+  }
+
+  .steam-card-actions .btn {
+    flex: 1 1 100%;
+  }
+}

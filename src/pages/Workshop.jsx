@@ -1,13 +1,9 @@
-import { useMemo, useState } from 'react'
-
 import {
   deleteWorkshopMap,
   fetchWorkshopMaps,
-  WORKSHOP_CATEGORIES,
 } from '../services/workshopMaps.js'
-import useCollection from '../hooks/useCollection.js'
-import useDelete from '../hooks/useDelete.js'
-import useEditModal from '../hooks/useEditModal.js'
+import useCrudPage from '../hooks/useCrudPage.js'
+import useWorkshopTabs, { TABS } from '../hooks/useWorkshopTabs.js'
 import WorkshopTabs from '../components/workshop/WorkshopTabs.jsx'
 import WorkshopCard from '../components/workshop/WorkshopCard.jsx'
 import WorkshopFormModal from '../components/workshop/WorkshopFormModal.jsx'
@@ -16,97 +12,99 @@ import CollectionView from '../components/common/CollectionView.jsx'
 import PageHeader from '../components/common/PageHeader.jsx'
 import Alert from '../components/common/Alert.jsx'
 
-const ALL_TAB = 'Todas'
-const TABS = [ALL_TAB, ...WORKSHOP_CATEGORIES]
-
-export default function Workshop() {
-  const [activeTab, setActiveTab] = useState(ALL_TAB)
-
-  const {
-    items: maps,
-    loading,
-    error: loadError,
-    reload: loadMaps,
-  } = useCollection(fetchWorkshopMaps, {
-    errorMessage: 'No se pudieron cargar los mapas de la Workshop. Intentalo de nuevo.',
-  })
-
-  const modal = useEditModal()
-
-  const countByCategory = useMemo(() => {
-    const counts = { [ALL_TAB]: maps.length }
-    for (const category of WORKSHOP_CATEGORIES) {
-      counts[category] = maps.filter((map) => map.category === category).length
-    }
-    return counts
-  }, [maps])
-
-  const visibleMaps = useMemo(() => {
-    if (activeTab === ALL_TAB) return maps
-    return maps.filter((map) => map.category === activeTab)
-  }, [maps, activeTab])
-
-  const deletion = useDelete((workshopMap) => deleteWorkshopMap(workshopMap.id), {
-    errorMessage: 'No se pudo eliminar el mapa de la Workshop. Intentalo de nuevo.',
-    onDeleted: loadMaps,
-  })
-
+function WorkshopGrid({ maps, onEdit, onDelete }) {
   return (
-    <div className="page container">
-      <PageHeader
-        title="Workshop"
-        subtitle="Mapas de entrenamiento recomendados de la Steam Workshop, organizados por categoría."
-        actionLabel="Nuevo mapa de Workshop"
-        onAction={modal.openCreate}
+    <div className="workshop-grid">
+      {maps.map((workshopMap) => (
+        <WorkshopCard
+          key={workshopMap.id}
+          workshopMap={workshopMap}
+          onEdit={onEdit}
+          onDelete={onDelete}
+        />
+      ))}
+    </div>
+  )
+}
+
+function WorkshopHeader({ onCreate }) {
+  return (
+    <PageHeader
+      title="Workshop"
+      subtitle="Mapas de entrenamiento recomendados de la Steam Workshop, organizados por categoría."
+      actionLabel="Nuevo mapa de Workshop"
+      onAction={onCreate}
+    />
+  )
+}
+
+function WorkshopCollection({ page, tabs }) {
+  return (
+    <CollectionView
+      loading={page.loading}
+      loadingText="Cargando mapas de la Workshop…"
+      error={page.error}
+      isEmpty={tabs.visibleMaps.length === 0}
+      empty={{
+        message: tabs.emptyMessage,
+        actionLabel: 'Agregar el primero',
+        onAction: page.modal.openCreate,
+      }}
+    >
+      <WorkshopGrid
+        maps={tabs.visibleMaps}
+        onEdit={page.modal.openEdit}
+        onDelete={page.deletion.ask}
       />
+    </CollectionView>
+  )
+}
 
-      <Alert>{deletion.error}</Alert>
-
-      <WorkshopTabs
-        tabs={TABS}
-        activeTab={activeTab}
-        counts={countByCategory}
-        onChange={setActiveTab}
-      />
-
-      <CollectionView
-        loading={loading}
-        loadingText="Cargando mapas de la Workshop…"
-        error={loadError}
-        isEmpty={visibleMaps.length === 0}
-        empty={{
-          message:
-            activeTab === ALL_TAB
-              ? 'Todavía no hay mapas de la Workshop cargados.'
-              : `No hay mapas en la categoría «${activeTab}» todavía.`,
-          actionLabel: 'Agregar el primero',
-          onAction: modal.openCreate,
-        }}
-      >
-        <div className="workshop-grid">
-          {visibleMaps.map((workshopMap) => (
-            <WorkshopCard
-              key={workshopMap.id}
-              workshopMap={workshopMap}
-              onEdit={modal.openEdit}
-              onDelete={deletion.ask}
-            />
-          ))}
-        </div>
-      </CollectionView>
-
+function WorkshopModals({ modal, deletion, reload }) {
+  return (
+    <>
       {modal.open && (
         <WorkshopFormModal
           open={modal.open}
           workshopMap={modal.editing}
           onClose={modal.close}
-          onSaved={loadMaps}
+          onSaved={reload}
         />
       )}
-
       <DeleteConfirmDialog
         deletion={deletion}
         title="Eliminar mapa de la Workshop"
+      />
+    </>
+  )
+}
+
+export default function Workshop() {
+  const page = useCrudPage({
+    fetchItems: fetchWorkshopMaps,
+    errorMessage:
+      'No se pudieron cargar los mapas de la Workshop. Intentalo de nuevo.',
+    deleteItem: (workshopMap) => deleteWorkshopMap(workshopMap.id),
+    deleteErrorMessage:
+      'No se pudo eliminar el mapa de la Workshop. Intentalo de nuevo.',
+  })
+  const tabs = useWorkshopTabs(page.items)
+
+  return (
+    <div className="page container">
+      <WorkshopHeader onCreate={page.modal.openCreate} />
+      <Alert>{page.deletion.error}</Alert>
+      <WorkshopTabs
+        tabs={TABS}
+        activeTab={tabs.activeTab}
+        counts={tabs.counts}
+        onChange={tabs.setActiveTab}
+      />
+      <WorkshopCollection page={page} tabs={tabs} />
+      <WorkshopModals
+        modal={page.modal}
+        deletion={page.deletion}
+        reload={page.reload}
       />
     </div>
   )

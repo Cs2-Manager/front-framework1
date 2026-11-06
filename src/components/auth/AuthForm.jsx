@@ -10,6 +10,7 @@ export default function AuthForm({
   submittingLabel,
   onSubmit,
   footer,
+  alternative,
   children,
 }) {
   return (
@@ -37,6 +38,8 @@ export default function AuthForm({
             submitLabel
           )}
         </button>
+
+        {alternative}
 
         <p className="auth-switch">{footer}</p>
       </form>

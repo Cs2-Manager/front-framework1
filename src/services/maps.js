@@ -1,7 +1,7 @@
 import api from './api'
 
-export async function fetchMaps() {
-  const { data } = await api.get('/maps')
+export async function fetchMaps(params = {}) {
+  const { data } = await api.get('/maps', { params })
   return data.maps
 }
 
@@ -21,7 +21,13 @@ export async function updateMap(id, payload) {
 }
 
 export async function deleteMap(id) {
-  await api.delete(`/maps/${id}`)
+  const { data } = await api.delete(`/maps/${id}`)
+  return data
+}
+
+export async function restoreMap(id) {
+  const { data } = await api.post(`/maps/${id}/unarchive`)
+  return data.map
 }
 
 export async function createCallout(mapId, payload) {

@@ -35,6 +35,10 @@ function CalloutFields({ form, errors, onChange }) {
   return (
     <>
       <FormField id="callout-name" name="zone_name" label="Nombre de la zona" value={form.zone_name} onChange={onChange} error={errors.zone_name} placeholder="Ej: B Site" />
+      <FormField name="zone" label="Sector" value={form.zone || ''} onChange={onChange} maxLength={120} />
+      <FormField name="description" label="Descripción del callout" as="textarea" value={form.description || ''} onChange={onChange} maxLength={4000} />
+      <FormField name="image_url" label="Imagen de referencia" type="url" value={form.image_url || ''} onChange={onChange} />
+      <label>Estado del callout<select name="status" value={form.status || 'PUBLISHED'} onChange={onChange}>{['DRAFT', 'PUBLISHED', 'ARCHIVED'].map(s => <option key={s}>{s}</option>)}</select></label>
       <div className="callout-ratios">
         <FormField id="callout-x" name="x_ratio" label="Posición X (0–1)" type="number" min="0" max="1" step="0.01" value={form.x_ratio} onChange={onChange} error={errors.x_ratio} />
         <FormField id="callout-y" name="y_ratio" label="Posición Y (0–1)" type="number" min="0" max="1" step="0.01" value={form.y_ratio} onChange={onChange} error={errors.y_ratio} />

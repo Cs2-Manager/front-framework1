@@ -1,124 +1,58 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { fetchMyTeam } from '../services/teams.js'
 
 import { fetchMaps } from '../services/maps.js'
 import { deleteLineup, fetchLineups } from '../services/lineups.js'
 import useCollection from '../hooks/useCollection.js'
-import useDelete from '../hooks/useDelete.js'
-import useEditModal from '../hooks/useEditModal.js'
-import LineupFilters from '../components/lineups/LineupFilters.jsx'
-import LineupFormModal from '../components/lineups/LineupFormModal.jsx'
-import LineupCard from '../components/lineups/LineupCard.jsx'
-import LineupPlayer from '../components/lineups/LineupPlayer.jsx'
-import DeleteConfirmDialog from '../components/common/DeleteConfirmDialog.jsx'
-import CollectionView from '../components/common/CollectionView.jsx'
-import PageHeader from '../components/common/PageHeader.jsx'
+import useCrudPage from '../hooks/useCrudPage.js'
+import {
+  buildLineupParams,
+  useMapIndex,
+  useSelectedLineup,
+} from '../hooks/useLineupSelection.js'
+import {
+  LineupModals,
+  LineupsCollection,
+  LineupsHeader,
+} from '../components/lineups/LineupsView.jsx'
 import Alert from '../components/common/Alert.jsx'
 
 const EMPTY_FILTERS = { map_id: '', type: '', side: '' }
 
-function buildParams(filters) {
-  const params = {}
-  if (filters.map_id) params.map_id = filters.map_id
-  if (filters.type) params.type = filters.type
-  if (filters.side) params.side = filters.side
-  return params
-}
-
 export default function Lineups() {
+  const [team, setTeam] = useState(null)
+  useEffect(() => { fetchMyTeam().then(setTeam).catch(() => setTeam(null)) }, [])
   const [filters, setFilters] = useState(EMPTY_FILTERS)
-  const [selected, setSelected] = useState(null)
 
   const { items: maps, error: mapsError } = useCollection(fetchMaps, {
     errorMessage: 'No se pudieron cargar los mapas.',
   })
 
-  const {
-    items: lineups,
-    loading,
-    error: loadError,
-    reload: loadLineups,
-  } = useCollection(() => fetchLineups(buildParams(filters)), {
+  const page = useCrudPage({
+    fetchItems: () => fetchLineups(buildLineupParams(filters)),
     deps: [filters],
     errorMessage: 'No se pudieron cargar los lineups. Intentalo de nuevo.',
+    deleteItem: (lineup) => deleteLineup(lineup.id),
+    deleteErrorMessage: 'No se pudo eliminar el lineup. Intentalo de nuevo.',
   })
 
-  const mapById = useMemo(
-    () => new Map(maps.map((map) => [map.id, map])),
-    [maps],
-  )
-
-  useEffect(() => {
-    setSelected((current) => {
-      if (current && lineups.some((item) => item.id === current.id)) {
-        return current
-      }
-      return lineups[0] || null
-    })
-  }, [lineups])
-
-  const modal = useEditModal()
-
-  const deletion = useDelete((lineup) => deleteLineup(lineup.id), {
-    errorMessage: 'No se pudo eliminar el lineup. Intentalo de nuevo.',
-    onDeleted: loadLineups,
-  })
+  const mapById = useMapIndex(maps)
+  const [selected, setSelected] = useSelectedLineup(page.items)
+  const view = { page, maps, mapsError, filters, setFilters, mapById, selected, setSelected }
 
   return (
     <div className="page container">
-      <PageHeader
-        title="Lineups"
-        subtitle="Biblioteca de lineups y utilidades por mapa."
-        actionLabel="Nuevo lineup"
-        onAction={modal.openCreate}
+      <section className="team-panel"><h2>Centro de alineaciones y utilidad</h2><p>Administrá titulares, suplentes, roles y configuraciones por mapa desde las alineaciones de tu equipo.</p><Link className="btn btn-primary" to={team ? `/teams/${team.id}/lineups` : '/teams'}>Alineaciones competitivas</Link> <Link className="btn btn-ghost" to="/maps">Granadas y estrategias por mapa</Link></section>
+      <LineupsHeader onCreate={page.modal.openCreate} />
+      <Alert>{page.deletion.error}</Alert>
+      <LineupsCollection view={view} />
+      <LineupModals
+        modal={page.modal}
+        deletion={page.deletion}
+        maps={maps}
+        reload={page.reload}
       />
-
-      <Alert>{deletion.error}</Alert>
-
-      <LineupFilters maps={maps} filters={filters} onChange={setFilters} />
-
-      {mapsError && !maps.length && <p className="text-muted">{mapsError}</p>}
-
-      <CollectionView
-        loading={loading}
-        loadingText="Cargando lineups…"
-        error={loadError}
-        isEmpty={lineups.length === 0}
-        empty={{
-          message: 'No se encontraron lineups con los filtros seleccionados.',
-          actionLabel: 'Crear un lineup',
-          onAction: modal.openCreate,
-        }}
-      >
-        <div className="lineups-layout">
-          <div className="lineups-list">
-            {lineups.map((lineup) => (
-              <LineupCard
-                key={lineup.id}
-                lineup={lineup}
-                mapName={mapById.get(lineup.map_id)?.name}
-                active={selected?.id === lineup.id}
-                onSelect={setSelected}
-                onEdit={modal.openEdit}
-                onDelete={deletion.ask}
-              />
-            ))}
-          </div>
-
-          <LineupPlayer lineup={selected} />
-        </div>
-      </CollectionView>
-
-      {modal.open && (
-        <LineupFormModal
-          open={modal.open}
-          maps={maps}
-          lineup={modal.editing}
-          onClose={modal.close}
-          onSaved={loadLineups}
-        />
-      )}
-
-      <DeleteConfirmDialog deletion={deletion} title="Eliminar lineup" />
     </div>
   )
 }

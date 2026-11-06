@@ -1,4 +1,4 @@
-export default function StatCard({ icon, value, label }) {
+export default function StatCard({ icon, value, label, hint }) {
   return (
     <div className="stat-card">
       <span className="stat-icon" aria-hidden="true">
@@ -7,6 +7,7 @@ export default function StatCard({ icon, value, label }) {
       <div>
         <div className="stat-value">{value}</div>
         <div className="stat-label">{label}</div>
+        {hint && <div className="stat-hint">{hint}</div>}
       </div>
     </div>
   )
