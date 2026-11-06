@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "verify:routes": "node scripts/verify-spa-routes.mjs"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^7.0.1",
