@@ -54,7 +54,10 @@ describe('api client', () => {
     const onUnauthorized = vi.fn()
     setUnauthorizedHandler(onUnauthorized)
 
-    const rejection = { response: { status: 401 } }
+    const rejection = {
+      response: { status: 401 },
+      config: { headers: { Authorization: 'Bearer jwt-de-prueba' } },
+    }
     await expect(
       api.interceptors.response.handlers[0].rejected(rejection),
     ).rejects.toBe(rejection)
@@ -73,5 +76,19 @@ describe('api client', () => {
     ).rejects.toBe(rejection)
 
     expect(onUnauthorized).not.toHaveBeenCalled()
+  })
+
+  it.each(['Bearer old-session', undefined])('does not end a new session after an old request rejects (%s)', async authorization => {
+    localStorage.setItem(AUTH_TOKEN_KEY, 'new-session')
+    const { default: api, setUnauthorizedHandler } = await importApi()
+    const onUnauthorized = vi.fn()
+    setUnauthorizedHandler(onUnauthorized)
+    const rejection = {
+      response: { status: 401 },
+      config: { headers: { Authorization: authorization } },
+    }
+    await expect(api.interceptors.response.handlers[0].rejected(rejection)).rejects.toBe(rejection)
+    expect(onUnauthorized).not.toHaveBeenCalled()
+    expect(localStorage.getItem(AUTH_TOKEN_KEY)).toBe('new-session')
   })
 })

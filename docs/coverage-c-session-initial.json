@@ -1,0 +1,16 @@
+{
+  "scope": "src/**/*.{js,jsx}; excludes only src/**/*.{test,spec}.{js,jsx} and src/test/**; includes App.jsx and main.jsx",
+  "test_files_passed": 85,
+  "tests_passed": 462,
+  "production_files": 255,
+  "lines": { "total": 3091, "covered": 2548, "skipped": 0, "pct": 82.43 },
+  "statements": { "total": 3571, "covered": 2800, "skipped": 0, "pct": 78.4 },
+  "functions": { "total": 1331, "covered": 983, "skipped": 0, "pct": 73.85 },
+  "branches": { "total": 3355, "covered": 2334, "skipped": 0, "pct": 69.56 },
+  "historically_low_services_lines": {
+    "src/services/notifications.js": { "covered": 9, "total": 9, "pct": 100 },
+    "src/services/tactics.js": { "covered": 9, "total": 9, "pct": 100 },
+    "src/services/workshopMaps.js": { "covered": 10, "total": 10, "pct": 100 },
+    "src/services/teamActivity.js": { "covered": 3, "total": 3, "pct": 100 }
+  }
+}

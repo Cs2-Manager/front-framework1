@@ -61,58 +61,84 @@ function MemberActions({
 export default function TeamRoster({
   team,
   viewerId,
+  presence = null,
   busy = false,
   onRemove,
   onChangeRole,
   onTransfer,
 }) {
+  const onlineIds = new Set(
+    (presence?.members || []).map((member) => member.user_id),
+  )
+  const showPresence = Boolean(presence)
+
   return (
     <section className="team-panel" aria-labelledby="team-roster-title">
       <div className="team-panel-head">
         <h2 id="team-roster-title">Integrantes</h2>
-        <span className="team-panel-count">{team.member_count}</span>
+        <span className="team-panel-count">
+          {showPresence
+            ? `${onlineIds.size}/${team.member_count} en línea`
+            : team.member_count}
+        </span>
       </div>
 
       {team.members.length === 0 ? (
         <p className="text-muted">Este equipo todavía no tiene integrantes.</p>
       ) : (
         <ul className="team-member-list">
-          {team.members.map((member) => (
-            <li key={member.id} className="team-member-row">
-              <div className="team-member-main">
-                <PlayerAvatar profile={member.user} size="sm" />
-                <div className="team-member-identity">
-                  <strong>{memberName(member)}</strong>
-                  <span className="team-member-username">
-                    @{member.user?.username}
-                  </span>
+          {team.members.map((member) => {
+            const online = onlineIds.has(member.user?.id)
+            return (
+              <li key={member.id} className="team-member-row">
+                <div className="team-member-main">
+                  <PlayerAvatar profile={member.user} size="sm" />
+                  <div className="team-member-identity">
+                    <strong>{memberName(member)}</strong>
+                    <span className="team-member-username">
+                      @{member.user?.username}
+                    </span>
+                    {showPresence && (
+                      <span
+                        className={`presence-indicator ${
+                          online ? 'presence-online' : 'presence-offline'
+                        }`}
+                      >
+                        <span
+                          className="presence-dot"
+                          aria-hidden="true"
+                        />
+                        {online ? 'En línea' : 'Desconectado'}
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className="team-member-meta">
-                <Badge size="sm" variant={roleVariant(member.role)}>
-                  {roleLabel(member.role)}
-                </Badge>
-                <span className="team-member-date">
-                  Desde {formatDate(member.joined_at)}
-                </span>
-                <Link
-                  to={`/players/${member.user?.id}`}
-                  className="team-member-link"
-                >
-                  Ver perfil
-                </Link>
-              </div>
-              <MemberActions
-                team={team}
-                member={member}
-                viewerId={viewerId}
-                busy={busy}
-                onRemove={onRemove}
-                onChangeRole={onChangeRole}
-                onTransfer={onTransfer}
-              />
-            </li>
-          ))}
+                <div className="team-member-meta">
+                  <Badge size="sm" variant={roleVariant(member.role)}>
+                    {roleLabel(member.role)}
+                  </Badge>
+                  <span className="team-member-date">
+                    Desde {formatDate(member.joined_at)}
+                  </span>
+                  <Link
+                    to={`/players/${member.user?.id}`}
+                    className="team-member-link"
+                  >
+                    Ver perfil
+                  </Link>
+                </div>
+                <MemberActions
+                  team={team}
+                  member={member}
+                  viewerId={viewerId}
+                  busy={busy}
+                  onRemove={onRemove}
+                  onChangeRole={onChangeRole}
+                  onTransfer={onTransfer}
+                />
+              </li>
+            )
+          })}
         </ul>
       )}
     </section>

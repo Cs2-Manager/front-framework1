@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import Alert from '../components/common/Alert.jsx'
 import LineupComparison from '../components/teamLineups/LineupComparison.jsx'
@@ -9,30 +8,19 @@ import EmptyState from '../components/common/EmptyState.jsx'
 import ErrorState from '../components/common/ErrorState.jsx'
 import LoadingState from '../components/common/LoadingState.jsx'
 import PageHeader from '../components/common/PageHeader.jsx'
-import TeamLineupCard from '../components/teamLineups/TeamLineupCard.jsx'
 import TeamLineupFormModal from '../components/teamLineups/TeamLineupFormModal.jsx'
+import TeamLineupsGrid from '../components/teamLineups/TeamLineupsGrid.jsx'
+import TeamLineupsSummary from '../components/teamLineups/TeamLineupsSummary.jsx'
 import { useTeam } from '../hooks/useTeams.js'
 import { useTeamLineups } from '../hooks/useTeamLineups.js'
-import {
-  activateTeamLineup,
-  deactivateTeamLineup,
-  deleteTeamLineup,
-  setPrimaryTeamLineup,
-} from '../services/teamLineups.js'
-import { getErrorMessage } from '../utils/errors.js'
+import useTeamLineupListActions from '../hooks/useTeamLineupListActions.js'
 
 export default function TeamLineups() {
   const { id } = useParams()
-  const navigate = useNavigate()
   const teamResource = useTeam(id)
   const lineupsResource = useTeamLineups(id)
   const { team } = teamResource
   const { lineups, limits } = lineupsResource
-  const [creating, setCreating] = useState(false)
-  const [busy, setBusy] = useState(false)
-  const [actionError, setActionError] = useState('')
-  const [feedback, setFeedback] = useState('')
-  const [pendingDelete, setPendingDelete] = useState(null)
 
   const teamId = team?.id ?? id
   const canManage = Boolean(team?.permissions?.can_manage_lineups)
@@ -43,60 +31,20 @@ export default function TeamLineups() {
     return Promise.all([teamResource.reload(), lineupsResource.reload()])
   }
 
-  async function runAction(action, successMessage) {
-    setBusy(true)
-    setActionError('')
-    setFeedback('')
-    try {
-      await action()
-      setFeedback(successMessage)
-      await reload()
-    } catch (err) {
-      setActionError(
-        getErrorMessage(
-          err,
-          'No pudimos completar la acción. Intentalo de nuevo.',
-        ),
-      )
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  async function handleDelete() {
-    if (!pendingDelete) return
-    setBusy(true)
-    setActionError('')
-    setFeedback('')
-    try {
-      await deleteTeamLineup(teamId, pendingDelete.id)
-      setPendingDelete(null)
-      setFeedback('Alineación eliminada.')
-      await reload()
-    } catch (err) {
-      setPendingDelete(null)
-      setActionError(
-        getErrorMessage(
-          err,
-          'No pudimos eliminar la alineación. Intentalo de nuevo.',
-        ),
-      )
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  function handleCreated(lineup) {
-    setCreating(false)
-    if (lineup?.id) {
-      navigate(`/teams/${teamId}/lineups/${lineup.id}`)
-      return
-    }
-    reload()
-  }
-
-  const activeCount = lineups.filter((lineup) => lineup.status === 'ACTIVE').length
-  const primary = lineups.find((lineup) => lineup.is_primary)
+  const {
+    creating,
+    setCreating,
+    busy,
+    actionError,
+    feedback,
+    pendingDelete,
+    setPendingDelete,
+    handleDelete,
+    handleCreated,
+    activate,
+    deactivate,
+    makePrimary,
+  } = useTeamLineupListActions({ teamId, reload })
 
   return (
     <div className="page container">
@@ -134,19 +82,7 @@ export default function TeamLineups() {
       <Alert variant="success">{feedback}</Alert>
 
       {!loading && !error && lineups.length > 0 && (
-        <div className="lineups-summary" aria-label="Resumen de alineaciones">
-          <span>
-            <strong>{lineups.length}</strong>{' '}
-            {lineups.length === 1 ? 'alineación' : 'alineaciones'}
-          </span>
-          <span>
-            <strong>{activeCount}</strong>{' '}
-            {activeCount === 1 ? 'activa' : 'activas'}
-          </span>
-          <span>
-            Principal: <strong>{primary?.name || 'Sin asignar'}</strong>
-          </span>
-        </div>
+        <TeamLineupsSummary lineups={lineups} />
       )}
 
       {loading && (
@@ -168,35 +104,15 @@ export default function TeamLineups() {
       )}
 
       {!loading && !error && lineups.length > 0 && (
-        <div className="team-lineups-grid">
-          {lineups.map((lineup) => (
-            <TeamLineupCard
-              key={lineup.id}
-              teamId={teamId}
-              lineup={lineup}
-              busy={busy}
-              onActivate={(item) =>
-                runAction(
-                  () => activateTeamLineup(teamId, item.id),
-                  'Alineación activada.',
-                )
-              }
-              onDeactivate={(item) =>
-                runAction(
-                  () => deactivateTeamLineup(teamId, item.id),
-                  'Alineación desactivada.',
-                )
-              }
-              onPrimary={(item) =>
-                runAction(
-                  () => setPrimaryTeamLineup(teamId, item.id),
-                  'Alineación marcada como principal.',
-                )
-              }
-              onDelete={setPendingDelete}
-            />
-          ))}
-        </div>
+        <TeamLineupsGrid
+          teamId={teamId}
+          lineups={lineups}
+          busy={busy}
+          onActivate={activate}
+          onDeactivate={deactivate}
+          onPrimary={makePrimary}
+          onDelete={setPendingDelete}
+        />
       )}
 
       <TeamLineupFormModal
@@ -205,7 +121,16 @@ export default function TeamLineups() {
         onClose={() => setCreating(false)}
         onSaved={handleCreated}
       />
-      {!loading && !error && <><LineupComparison teamId={teamId} lineups={lineups} /><LineupHistory teamId={teamId} updatedAt={lineups.map(l => l.updated_at).join(',')} /></>}
+
+      {!loading && !error && (
+        <>
+          <LineupComparison teamId={teamId} lineups={lineups} />
+          <LineupHistory
+            teamId={teamId}
+            updatedAt={lineups.map((lineup) => lineup.updated_at).join(',')}
+          />
+        </>
+      )}
 
       <ConfirmDialog
         open={Boolean(pendingDelete)}

@@ -6,6 +6,7 @@ import './phase4.css'
 import './steam.css'
 import './matchmaking.css'
 import './faceit.css'
+import './realtime.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

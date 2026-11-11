@@ -1,0 +1,23 @@
+{
+  "scope": "src/**/*.{js,jsx}; excludes only src/**/*.{test,spec}.{js,jsx} and src/test/**; includes App.jsx and main.jsx",
+  "command": "npm run test:coverage -- --maxWorkers=2",
+  "test_files_passed": 88,
+  "tests_passed": 473,
+  "production_files": 256,
+  "missing_production_files": [],
+  "unexpected_files": [],
+  "lines": { "total": 3100, "covered": 2577, "skipped": 0, "pct": 83.12 },
+  "statements": { "total": 3584, "covered": 2835, "skipped": 0, "pct": 79.1 },
+  "functions": { "total": 1332, "covered": 998, "skipped": 0, "pct": 74.92 },
+  "branches": { "total": 3364, "covered": 2355, "skipped": 0, "pct": 70 },
+  "historically_low_services_lines": {
+    "src/services/notifications.js": { "covered": 9, "total": 9, "pct": 100 },
+    "src/services/tactics.js": { "covered": 9, "total": 9, "pct": 100 },
+    "src/services/workshopMaps.js": { "covered": 10, "total": 10, "pct": 100 },
+    "src/services/teamActivity.js": { "covered": 3, "total": 3, "pct": 100 }
+  },
+  "uncovered_entrypoints_lines": {
+    "src/App.jsx": { "covered": 0, "total": 1, "pct": 0 },
+    "src/main.jsx": { "covered": 0, "total": 1, "pct": 0 }
+  }
+}

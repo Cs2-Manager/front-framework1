@@ -1,135 +1,40 @@
-import { useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import Alert from '../components/common/Alert.jsx'
 import ConfirmDialog from '../components/common/ConfirmDialog.jsx'
 import ErrorState from '../components/common/ErrorState.jsx'
 import LoadingState from '../components/common/LoadingState.jsx'
+import TeamActivityFeed from '../components/teams/TeamActivityFeed.jsx'
 import TeamHeader from '../components/teams/TeamHeader.jsx'
 import TeamGrenadeProposals from '../components/teams/TeamGrenadeProposals.jsx'
 import TeamInvitationsPanel from '../components/teams/TeamInvitationsPanel.jsx'
 import TeamRoster from '../components/teams/TeamRoster.jsx'
-import { memberName } from '../components/teams/teamDisplay.js'
 import { useAuth } from '../context/AuthContext.jsx'
+import { useRealtime } from '../context/RealtimeContext.jsx'
 import { useTeam } from '../hooks/useTeams.js'
-import {
-  cancelTeamInvitation,
-  inviteTeamMember,
-  leaveTeam,
-  removeTeamMember,
-  transferTeamCaptain,
-  updateTeamMemberRole,
-} from '../services/teams.js'
-import { getErrorMessage } from '../utils/errors.js'
+import useTeamDetailActions from '../hooks/useTeamDetailActions.js'
 
 export default function TeamDetail() {
   const { id } = useParams()
-  const navigate = useNavigate()
   const { user } = useAuth()
+  const { presenceByTeam } = useRealtime()
   const { team, loading, error, reload } = useTeam(id)
-  const [busy, setBusy] = useState(false)
-  const [actionError, setActionError] = useState('')
-  const [feedback, setFeedback] = useState('')
-  const [confirm, setConfirm] = useState(null)
   const viewerId = user?.id
 
-  async function runAction(action, successMessage) {
-    setBusy(true)
-    setActionError('')
-    setFeedback('')
-    try {
-      await action()
-      setFeedback(successMessage)
-      await reload()
-    } catch (err) {
-      setActionError(
-        getErrorMessage(
-          err,
-          'No pudimos completar la acción. Intentalo de nuevo.',
-        ),
-      )
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  async function handleInvite(username, role) {
-    setBusy(true)
-    setActionError('')
-    setFeedback('')
-    try {
-      await inviteTeamMember(team.id, { username, role })
-      setFeedback('Invitación enviada.')
-      await reload()
-    } catch (err) {
-      setActionError(
-        getErrorMessage(err, 'No pudimos enviar la invitación.'),
-      )
-      throw err
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  function askRemove(member) {
-    setConfirm({
-      title: 'Expulsar integrante',
-      message: `¿Seguro que querés expulsar a ${memberName(member)} del equipo?`,
-      confirmLabel: 'Expulsar',
-      action: () => removeTeamMember(team.id, member.user.id),
-      success: 'Integrante expulsado.',
-    })
-  }
-
-  function askTransfer(member) {
-    setConfirm({
-      title: 'Transferir capitanía',
-      message: `¿Transferir la capitanía a ${memberName(member)}? Dejarás de ser capitán.`,
-      confirmLabel: 'Transferir',
-      action: () => transferTeamCaptain(team.id, member.user.id),
-      success: 'Capitanía transferida.',
-    })
-  }
-
-  function askLeave() {
-    setConfirm({
-      title: 'Abandonar equipo',
-      message:
-        '¿Seguro que querés abandonar el equipo? Si sos el único integrante, el equipo se eliminará.',
-      confirmLabel: 'Abandonar',
-      action: () => leaveTeam(team.id),
-      success: 'Abandonaste el equipo.',
-      leave: true,
-    })
-  }
-
-  async function handleConfirm() {
-    if (!confirm) return
-    const current = confirm
-    setBusy(true)
-    setActionError('')
-    setFeedback('')
-    try {
-      await current.action()
-      setConfirm(null)
-      if (current.leave) {
-        navigate('/teams')
-        return
-      }
-      setFeedback(current.success)
-      await reload()
-    } catch (err) {
-      setConfirm(null)
-      setActionError(
-        getErrorMessage(
-          err,
-          'No pudimos completar la acción. Intentalo de nuevo.',
-        ),
-      )
-    } finally {
-      setBusy(false)
-    }
-  }
+  const {
+    busy,
+    actionError,
+    feedback,
+    confirm,
+    setConfirm,
+    handleInvite,
+    askRemove,
+    askTransfer,
+    askLeave,
+    handleConfirm,
+    changeRole,
+    cancelInvitation,
+  } = useTeamDetailActions({ team, reload })
 
   return (
     <div className="page container">
@@ -163,14 +68,10 @@ export default function TeamDetail() {
             <TeamRoster
               team={team}
               viewerId={viewerId}
+              presence={team.is_member ? presenceByTeam[team.id] : null}
               busy={busy}
               onRemove={askRemove}
-              onChangeRole={(member, role) =>
-                runAction(
-                  () => updateTeamMemberRole(team.id, member.user.id, role),
-                  'Rol actualizado.',
-                )
-              }
+              onChangeRole={changeRole}
               onTransfer={askTransfer}
             />
 
@@ -179,14 +80,11 @@ export default function TeamDetail() {
               viewerId={viewerId}
               busy={busy}
               onInvite={handleInvite}
-              onCancel={(invitation) =>
-                runAction(
-                  () => cancelTeamInvitation(team.id, invitation.id),
-                  'Invitación cancelada.',
-                )
-              }
+              onCancel={cancelInvitation}
             />
           </div>
+
+          <TeamActivityFeed teamId={team.id} isMember={team.is_member} />
 
           <TeamGrenadeProposals team={team} />
 

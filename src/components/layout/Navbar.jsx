@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 import { useAuth } from '../../context/AuthContext.jsx'
 import NavLinks from './NavLinks.jsx'
+import NotificationBell from './NotificationBell.jsx'
 import ProfileMenu from './ProfileMenu.jsx'
 import NavbarMobileMenu from './NavbarMobileMenu.jsx'
 import useNavbarMenu from './useNavbarMenu.js'
@@ -76,6 +77,7 @@ function NavbarAuth({ isAuthenticated, user, menu, onLogout }) {
 function NavbarActions({ isAuthenticated, user, menu, onLogout }) {
   return (
     <div className="navbar-actions">
+      {isAuthenticated && user && <NotificationBell />}
       <NavbarAuth
         isAuthenticated={isAuthenticated}
         user={user}

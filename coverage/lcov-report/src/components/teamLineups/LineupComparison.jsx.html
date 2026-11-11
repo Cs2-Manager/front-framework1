@@ -1,0 +1,148 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/components/teamLineups/LineupComparison.jsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/teamLineups</a> LineupComparison.jsx</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">31.81% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>7/22</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">16.66% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>5/30</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">11.11% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>1/9</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">25% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>2/8</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState } from 'react'
+import api from '../../services/api.js'
+import LineupRosterView from './LineupRosterView.jsx'
+import Alert from '../common/Alert.jsx'
+import MapStatistics from '../maps/MapStatistics.jsx'
+export default function LineupComparison({ teamId, lineups }) {
+  const [left, setLeft] = useState(''), [right, setRight] = useState(''), [result, setResult] = useState(null), [error, setError] = useState(''), [busy, setBusy] = useState(false)
+  async function <span class="fstat-no" title="function not covered" >compare() {</span>
+<span class="cstat-no" title="statement not covered" >    setBusy(true); <span class="cstat-no" title="statement not covered" >s</span>etError(''); <span class="cstat-no" title="statement not covered" >s</span>etResult(null)</span>
+<span class="cstat-no" title="statement not covered" >    try { <span class="cstat-no" title="statement not covered" >setResult((await api.get(`/teams/${teamId}/lineups/${left}/compare/${right}`)).data) }</span> catch { <span class="cstat-no" title="statement not covered" >setError('No se pudieron comparar las alineaciones.') }</span> finally { <span class="cstat-no" title="statement not covered" >setBusy(false) }</span></span>
+  }
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (lineups.length &lt; 2) return null
+<span class="cstat-no" title="statement not covered" >  return &lt;section className="team-panel"&gt;&lt;h2&gt;Comparar alineaciones&lt;/h2&gt;&lt;div className="tactical-toolbar"&gt;</span>
+    {[['Primera alineación', left, setLeft], ['Segunda alineación', right, setRight]].<span class="fstat-no" title="function not covered" >map(([</span>label, value, setter]) =&gt; <span class="cstat-no" title="statement not covered" >&lt;label key={label}&gt;{label}&lt;select value={value} <span class="fstat-no" title="function not covered" >onChange={e</span> =&gt; <span class="cstat-no" title="statement not covered" >setter(e.target.value)}&gt;&lt;</span>option value=""&gt;Seleccionar&lt;/option&gt;{lineups.<span class="fstat-no" title="function not covered" >map(l</span> =&gt; <span class="cstat-no" title="statement not covered" >&lt;option key={l.id} value={l.id}&gt;{l.name}&lt;/option&gt;)</span>}&lt;/select&gt;&lt;/label&gt;)</span>}
+    &lt;button disabled={!left || !right || left === right || busy} onClick={compare}&gt;Comparar&lt;/button&gt;&lt;/div&gt;&lt;Alert&gt;{error}&lt;/Alert&gt;
+    {busy &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;p&gt;Cargando comparación…&lt;/p&gt;}</span>
+    {result?.average_elo &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;p&gt;ELO promedio registrado en perfiles: {result.average_elo.first?.value ?? 'No disponible'} ({result.average_elo.first?.sample || 0} jugadores) / {result.average_elo.second?.value ?? 'No disponible'} ({result.average_elo.second?.sample || 0} jugadores).&lt;/p&gt;}</span>
+    {result &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;div className="team-lineups-grid"&gt;{[result.first, result.second].<span class="fstat-no" title="function not covered" >filter(l</span> =&gt; <span class="cstat-no" title="statement not covered" >l.map_id)</span>.<span class="fstat-no" title="function not covered" >map(l</span> =&gt; <span class="cstat-no" title="statement not covered" >&lt;section key={l.id}&gt;&lt;h3&gt;Rendimiento por mapa · {l.name} · {l.map_name}&lt;/h3&gt;&lt;MapStatistics team={{ id: teamId }} map={{ id: l.map_id }} playerIds={[...l.starters, ...l.substitutes].<span class="fstat-no" title="function not covered" >map(p</span> =&gt; <span class="cstat-no" title="statement not covered" >p.user.id)</span>} /&gt;&lt;/section&gt;)</span>}&lt;/div&gt;}</span>
+    {result &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;&gt;&lt;p&gt;Agregados: {result.added.join(', ') || 'Ninguno'} · Eliminados: {result.removed.join(', ') || 'Ninguno'} · Cambios de rol/titularidad: {result.changed.join(', ') || 'Ninguno'}&lt;/p&gt;&lt;div className="team-lineups-grid"&gt;{[result.first, result.second].<span class="fstat-no" title="function not covered" >map(l</span> =&gt; <span class="cstat-no" title="statement not covered" >&lt;div key={l.id}&gt;&lt;h3&gt;{l.name} · {l.map_name || 'General'}&lt;/h3&gt;&lt;LineupRosterView lineup={l} /&gt;&lt;/div&gt;)</span>}&lt;/div&gt;&lt;p&gt;El ELO individual no representa la fuerza colectiva. Rendimiento colectivo: no disponible.&lt;/p&gt;&lt;/&gt;}</span>
+  &lt;/section&gt;
+}
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-11-11T00:51:51.560Z
+            </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    

@@ -7,6 +7,8 @@ import TeamDetail from './TeamDetail.jsx'
 const mocks = vi.hoisted(() => ({
   useTeam: vi.fn(),
   useAuth: vi.fn(),
+  useRealtime: vi.fn(),
+  fetchTeamActivity: vi.fn(),
   inviteTeamMember: vi.fn(),
   cancelTeamInvitation: vi.fn(),
   removeTeamMember: vi.fn(),
@@ -17,6 +19,17 @@ const mocks = vi.hoisted(() => ({
 
 vi.mock('../hooks/useTeams.js', () => ({ useTeam: mocks.useTeam }))
 vi.mock('../context/AuthContext.jsx', () => ({ useAuth: mocks.useAuth }))
+// Se conserva `normalizeTeamActivity` real; solo se sustituye `useRealtime`.
+vi.mock('../context/RealtimeContext.jsx', async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    useRealtime: mocks.useRealtime,
+  }
+})
+vi.mock('../services/teamActivity.js', () => ({
+  fetchTeamActivity: mocks.fetchTeamActivity,
+}))
 vi.mock('../services/teams.js', () => ({
   inviteTeamMember: mocks.inviteTeamMember,
   cancelTeamInvitation: mocks.cancelTeamInvitation,
@@ -102,6 +115,14 @@ describe('TeamDetail page', () => {
   beforeEach(() => {
     vi.resetAllMocks()
     mocks.useAuth.mockReturnValue({ user: { id: 1, username: 'cap' } })
+    mocks.useRealtime.mockReturnValue({
+      presenceByTeam: {},
+      activityByTeam: {},
+    })
+    mocks.fetchTeamActivity.mockResolvedValue({
+      activities: [],
+      meta: { total: 0, page: 1, per_page: 20 },
+    })
   })
 
   it('shows loading and error states', () => {
@@ -302,5 +323,126 @@ describe('TeamDetail page', () => {
       expect(mocks.removeTeamMember).toHaveBeenCalledWith(5, 2),
     )
     expect(reload).toHaveBeenCalled()
+  })
+
+  it('shows live presence for current members only', () => {
+    mocks.useRealtime.mockReturnValue({
+      presenceByTeam: {
+        5: {
+          team_id: 5,
+          members: [{ user_id: 1, username: 'cap', role: 'CAPTAIN' }],
+        },
+      },
+      activityByTeam: {},
+    })
+    mocks.useTeam.mockReturnValue(state())
+
+    renderDetail()
+
+    expect(screen.getByText('1/2 en línea')).toBeInTheDocument()
+    expect(screen.getByText('En línea')).toBeInTheDocument()
+    expect(screen.getByText('Desconectado')).toBeInTheDocument()
+  })
+
+  it('hides presence from outsiders', () => {
+    mocks.useRealtime.mockReturnValue({
+      presenceByTeam: {
+        5: {
+          team_id: 5,
+          members: [{ user_id: 1, username: 'cap', role: 'CAPTAIN' }],
+        },
+      },
+      activityByTeam: {},
+    })
+    mocks.useTeam.mockReturnValue(
+      state({
+        team: team({
+          is_member: false,
+          my_role: null,
+          permissions: {
+            can_edit: false,
+            can_manage_members: false,
+            can_change_roles: false,
+            can_manage_invitations: false,
+            can_invite: false,
+            can_transfer_captain: false,
+            can_leave: false,
+          },
+          pending_invitations: undefined,
+        }),
+      }),
+    )
+
+    renderDetail()
+
+    expect(screen.queryByText('1/2 en línea')).not.toBeInTheDocument()
+    expect(screen.queryByText('En línea')).not.toBeInTheDocument()
+  })
+
+  it('loads the team activity history for members', async () => {
+    mocks.fetchTeamActivity.mockResolvedValue({
+      activities: [
+        {
+          id: 3,
+          event_id: 'act-3',
+          team_id: 5,
+          activity_type: 'member.role_changed',
+          description: 'cap cambió el rol de frag a Entrenador.',
+          actor: { user_id: 1, username: 'cap' },
+          resource_type: 'team',
+          resource_id: 5,
+          path: '/teams/5',
+          metadata: {},
+          created_at: '2026-11-08T10:00:00+00:00',
+        },
+      ],
+      meta: { total: 1, page: 1, per_page: 20 },
+    })
+    mocks.useTeam.mockReturnValue(state())
+
+    renderDetail()
+
+    await waitFor(() =>
+      expect(mocks.fetchTeamActivity).toHaveBeenCalledWith(5, {
+        page: 1,
+        perPage: 20,
+      }),
+    )
+    expect(
+      await screen.findByRole('heading', { name: 'Actividad' }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText('cap cambió el rol de frag a Entrenador.'),
+    ).toBeInTheDocument()
+    expect(screen.getByText('Cambio de rol')).toBeInTheDocument()
+    expect(screen.getByText('por cap')).toBeInTheDocument()
+  })
+
+  it('does not request activity for outsiders', () => {
+    mocks.useTeam.mockReturnValue(
+      state({
+        team: team({
+          is_member: false,
+          my_role: null,
+          permissions: {
+            can_edit: false,
+            can_manage_members: false,
+            can_change_roles: false,
+            can_manage_invitations: false,
+            can_invite: false,
+            can_transfer_captain: false,
+            can_leave: false,
+          },
+          pending_invitations: undefined,
+        }),
+      }),
+    )
+
+    renderDetail()
+
+    expect(mocks.fetchTeamActivity).not.toHaveBeenCalled()
+    expect(
+      screen.queryByRole('heading', { name: 'Actividad' }),
+    ).not.toBeInTheDocument()
   })
 })

@@ -3,6 +3,7 @@
 import { readFile } from 'node:fs/promises'
 import { pathToFileURL } from 'node:url'
 import assert from 'node:assert/strict'
+import { error as reportError, info } from './lib/cli-report.mjs'
 const { chromium } = await import(pathToFileURL(process.env.PLAYWRIGHT_MODULE).href)
 const fixture = JSON.parse(await readFile(process.env.PHASE8_FIXTURE, 'utf8'))
 const browser = await chromium.launch({ channel: 'msedge', headless: true })
@@ -78,10 +79,10 @@ try {
   await page.getByText(/El ELO individual no representa/).waitFor()
   await page.screenshot({ path: `${process.env.PHASE8_SCREENSHOTS}/lineup-comparison.png`, fullPage: true })
   assert.deepEqual(errors, [])
-  console.log('Browser OK: library, strategy creation, lineup selection, marker save/reload, normalized persistence, preparation, private grenade creation, favorites, map lineup creation, history, comparison, 1440/768/390px layouts; no JS errors.')
+  info('Browser OK: library, strategy creation, lineup selection, marker save/reload, normalized persistence, preparation, private grenade creation, favorites, map lineup creation, history, comparison, 1440/768/390px layouts; no JS errors.')
 } catch (error) {
-  console.error('Visible alerts:', await page.getByRole('alert').allTextContents())
-  console.error('JS errors:', errors)
+  reportError('Visible alerts:', await page.getByRole('alert').allTextContents())
+  reportError('JS errors:', errors)
   await page.screenshot({ path: `${process.env.PHASE8_SCREENSHOTS}/tactical-failure.png`, fullPage: true })
   throw error
 } finally {
