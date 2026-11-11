@@ -10,13 +10,13 @@
 | Aspecto | Resultado |
 |---|---|
 | Tipo de proyecto | frontend |
-| Índice de calidad de servicios | **29/100** (mínimo 50) |
-| Criterios cumplidos | **12/14** |
-| Aprobado (semáforo) | **NO** |
-| Código (LOC) | 13,364 |
-| Archivos de código | 193 |
-| Tests (archivos) | 63 |
-| Cobertura de líneas | no aplica (frontend sin herramienta de cobertura E2E) |
+| Índice de calidad de servicios | **100/100** (mínimo 50) |
+| Criterios cumplidos | **15/15** |
+| Aprobado (semáforo) | **SI** |
+| Código (LOC) | 15,593 |
+| Archivos de código | 261 |
+| Tests (archivos) | 90 |
+| Cobertura de líneas | 83.1% (mínimo 80%) |
 | Capas detectadas | vistas, servicios, estado |
 | Pushes directos a `main` (sin PR) | 0 |
 
@@ -26,7 +26,7 @@
 
 | Autor | Commits | Código (LOC) | Tests (LOC) | Docs (LOC) | Días activos | % del código |
 |---|---:|---:|---:|---:|---:|---:|
-| Gaspar Giménez | 9 | 20,871 | 6,694 | 0 | 8 | 100% |
+| Gaspar Giménez | 10 | 23,789 | 9,878 | 388,904 | 9 | 100% |
 
 > _El LOC de autoría lo calcula RepoSense sobre el historial y puede diferir del LOC de código del análisis de calidad (que mira solo el estado de `main`)._
 
@@ -36,7 +36,7 @@
 
 | Alumno | Sesiones | Cumplimiento | Pausa | Recencia | IC | Nivel | Para subir de nivel |
 |---|--:|--:|--:|--:|--:|--|--|
-| Gaspar Giménez | 6 | 23% | 30 d | 64% | **24** | No aprueba | Cumplimiento 23% (mín. 50%) |
+| Gaspar Giménez | 7 | 27% | 30 d | 100% | **32** | No aprueba | Cumplimiento 27% (mín. 50%) |
 
 > Para aprobar el IC: **2 sesiones por semana** sostenidas, sin pausas mayores a **10 días** y con actividad en las **últimas 2 semanas**. Se excluyen merges, bots y al docente. Zona horaria UTC-3.
 
@@ -44,21 +44,17 @@
 
 Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuando el resultado está en rojo, se agregan preguntas para **investigar la causa** (no hay recetas: entender el porqué es parte de la evaluación).
 
-### 1. Índice de calidad de servicios (indice) — A REVISAR
+### 1. Índice de calidad de servicios (indice) — OK
 
 - **Qué mide:** Un resumen numérico (0-100) que combina todas las señales y métricas del análisis, con topes duros por duplicación.
 - **Por qué importa:** Ordena y prioriza la revisión: un índice bajo indica varias señales que conviene mirar juntas.
-- **Tu resultado:** índice **29/100** _(mínimo 50)_
-- **Para investigar la causa:**
-    - ¿En qué momento del proyecto se concentraron los problemas (arranque, integración de partes, cierre)?
-    - ¿El índice bajó por muchas señales chicas o por una o dos graves?
-    - ¿Se revisó el código integrado después de unir el trabajo de cada integrante?
+- **Tu resultado:** índice **100/100** _(mínimo 50)_
 
 ### 2. Duplicación (DRY) (duplicacion) — OK
 
 - **Qué mide:** Porcentaje de bloques de código repetidos (similitud) en el repositorio.
 - **Por qué importa:** Cada copia se mantiene por separado: un arreglo hay que repetirlo y los defectos se multiplican.
-- **Tu resultado:** **5.7%** de duplicación _(máximo 15%)_
+- **Tu resultado:** **7.1%** de duplicación _(máximo 15%)_
 
 ### 3. Secretos hardcodeados (SEC) — OK
 
@@ -96,15 +92,11 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 - **Por qué importa:** Se pierde la ayuda del compilador justo donde los datos vienen de afuera (API, formularios).
 - **Tu resultado:** **0** uso(s) de `any` _(máximo 2)_
 
-### 9. Componente demasiado grande (BigC) — A REVISAR
+### 9. Componente demasiado grande (BigC) — OK
 
 - **Qué mide:** Componentes de UI muy extensos, que suelen mezclar render, estado y lógica.
 - **Por qué importa:** Son difíciles de leer, probar y reutilizar, y sus cambios tienen efectos inesperados.
-- **Tu resultado:** **17** componente(s) demasiado grande(s) _(máximo 1)_
-- **Para investigar la causa:**
-    - ¿El componente creció a medida que se agregaban requisitos, sin volver a dividirlo?
-    - ¿Mezcla responsabilidades distintas (mostrar, calcular, pedir datos)?
-    - ¿Se dividió por pantalla o por unidad de responsabilidad?
+- **Tu resultado:** **1** componente(s) demasiado grande(s) _(máximo 1)_
 
 ### 10. Baja cohesión (Coh) — OK
 
@@ -116,13 +108,13 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 - **Qué mide:** Complejidad ciclomática: cantidad de caminos posibles dentro de una función (condicionales, bucles, casos).
 - **Por qué importa:** Muchos caminos = difícil de seguir y de probar; suelen esconderse casos sin cubrir.
-- **Tu resultado:** **66** bloque(s) de complejidad alta _(máximo 5 por 1000 LOC (tenés 13364 LOC))_
+- **Tu resultado:** **52** bloque(s) de complejidad alta _(máximo 5 por 1000 LOC (tenés 15593 LOC))_
 
 ### 12. Funciones/métodos largos o con muchos parámetros (Tam) — OK
 
 - **Qué mide:** Tamaño de las funciones/métodos y cantidad de parámetros.
 - **Por qué importa:** Una función que hace varias cosas cuesta leerla, nombrarla y reutilizarla.
-- **Tu resultado:** **81** función/método(s) largos o con muchos parámetros _(máximo 10 por 1000 LOC)_
+- **Tu resultado:** **51** función/método(s) largos o con muchos parámetros _(máximo 10 por 1000 LOC)_
 
 ### 13. Acoplamiento alto (Acop) — OK
 
@@ -130,30 +122,29 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 - **Por qué importa:** Piezas muy enlazadas hacen que un cambio se propague y que sea difícil reemplazar partes.
 - **Tu resultado:** **0** unidad(es) con acoplamiento alto _(máximo 2 por 1000 LOC)_
 
-### 14. Vistas del frontend (Vistas) — OK
+### 14. Cobertura de tests (Cob) — OK
+
+- **Qué mide:** Porcentaje de líneas de código ejecutadas por la suite de tests (cobertura real, no cantidad de archivos de test).
+- **Por qué importa:** Un test que existe pero no ejecuta el código no protege de nada: la cobertura muestra qué partes quedan sin verificar.
+- **Tu resultado:** **83.1%** de líneas cubiertas · fuente: artefacto: coverage/coverage-summary.json _(mínimo 80% de líneas)_
+
+### 15. Vistas del frontend (Vistas) — OK
 
 - **Qué mide:** Cantidad de vistas/componentes de pantalla del frontend.
 - **Por qué importa:** El frontend se mide por pantallas: pocas vistas sugiere poca cobertura de la interfaz pedida.
-- **Tu resultado:** **156** vista(s)/componente(s) _(mínimo 6)_
+- **Tu resultado:** **210** vista(s)/componente(s) _(mínimo 6)_
 
 ## 5. Observaciones y qué falta
 
-Criterios que hoy están en rojo y, para cada uno, una explicación breve de **cómo corregirlo** hasta alcanzar el nivel de aprobación (perfil `exigente`):
-
-| Criterio | Resultado actual | Meta | Brecha | Cómo alcanzarlo |
-|---|---|---|---|---|
-| Índice de calidad de servicios (indice) | índice **29/100** | mínimo 50 | faltan 21 pts | El índice sólo penaliza lo que **excede** los umbrales de cada criterio: si tenés todo en verde, el índice es 100. Si está en rojo, mirá la columna **Brecha** y los criterios en rojo; corregí primero duplicación, SEC, SQL y capas. Meta del perfil exigente: ≥50. |
-| Componente demasiado grande (BigC) | **17** componente(s) demasiado grande(s) | máximo 1 | 16 componente(s) de más | Dividí el componente por responsabilidad en subcomponentes (render, estado, acceso a datos) y dejá el original sólo como orquestador. Meta: ≤1 componente grande. |
-
-> Empezá por las señales de seguridad (**SEC**, **SQL**) y por la **duplicación**: son las que más pesan en el índice y las más rápidas de verificar a ojo. Después de corregir, volvé a correr la medición: el semáforo se recalcula sobre `main`.
+_Cumple **todos** los criterios del semáforo: no hay nada que arreglar para aprobar. El siguiente objetivo es sostenerlo y mejorar duplicación y diseño._
 
 ## 6. Actividad en clase (miércoles y viernes)
 
-> Se consideran las **23 clases** del período (miércoles y viernes, según `config/constancia.json`; feriados y semanas sin clase descontados). `Commits` = commits de trabajo (no-merge); `Merges` = merges de PR (también son push). Los días sin actividad dicen **sin actividad**.
+> Se consideran las **26 clases** del período (miércoles y viernes, según `config/constancia.json`; feriados y semanas sin clase descontados). `Commits` = commits de trabajo (no-merge); `Merges` = merges de PR (también son push). Los días sin actividad dicen **sin actividad**.
 
 ### Facu2009
 
-**5/23 clases con actividad** · 7 commits · 8 merges
+**7/26 clases con actividad** · 9 commits · 10 merges
 
 | Fecha | Actividad | Repositorios | Commits / merges |
 |---|:--:|---|--:|
@@ -180,10 +171,13 @@ Criterios que hoy están en rojo y, para cada uno, una explicación breve de **c
 | 2026-10-23 | No | sin actividad | 0 / 0 |
 | 2026-10-28 | No | sin actividad | 0 / 0 |
 | 2026-10-30 | **Sí** | backend1, front-framework1 | 1 / 2 |
+| 2026-11-04 | No | sin actividad | 0 / 0 |
+| 2026-11-06 | **Sí** | backend1 | 1 / 1 |
+| 2026-11-11 | **Sí** | backend1 | 1 / 1 |
 
 ### Gaspar Giménez
 
-**7/23 clases con actividad** · 7 commits · 4 merges
+**9/26 clases con actividad** · 10 commits · 6 merges
 
 | Fecha | Actividad | Repositorios | Commits / merges |
 |---|:--:|---|--:|
@@ -210,29 +204,13 @@ Criterios que hoy están en rojo y, para cada uno, una explicación breve de **c
 | 2026-10-23 | No | sin actividad | 0 / 0 |
 | 2026-10-28 | No | sin actividad | 0 / 0 |
 | 2026-10-30 | **Sí** | front-framework1 | 1 / 0 |
+| 2026-11-04 | No | sin actividad | 0 / 0 |
+| 2026-11-06 | **Sí** | front-framework1 | 2 / 1 |
+| 2026-11-11 | **Sí** | front-framework1 | 1 / 1 |
 
 ## 7. Anexo: dónde mirar
 
-Archivos donde el análisis encontró cada señal en rojo (sin número de línea, a propósito):
-
-**Componente demasiado grande (BigC)** — 17 archivo(s):
-- `src/components/faceit/FaceitAccountCard.jsx`
-- `src/components/faceit/FaceitLinkCard.jsx`
-- `src/components/maps/GrenadeCard.jsx`
-- `src/components/maps/GrenadeEditor.jsx`
-- `src/components/maps/GrenadeFormModal.jsx`
-- `src/components/maps/GrenadeLibrary.jsx`
-- `src/components/matchmaking/MatchmakingHistory.jsx`
-- `src/components/matchmaking/MatchmakingSection.jsx`
-- `src/components/profile/ProfileForm.jsx`
-- `src/components/profile/icons.jsx`
-- `src/components/steam/SteamAccountCard.jsx`
-- `src/components/teams/TeamGrenadeProposals.jsx`
-- `src/pages/Home.jsx`
-- `src/pages/Maps.jsx`
-- `src/pages/TeamDetail.jsx`
-- `src/pages/TeamLineupDetail.jsx`
-- `src/pages/TeamLineups.jsx`
+_No hay criterios en rojo con archivos asociados._
 
 ---
 _Informe generado por la cátedra. Los umbrales corresponden al perfil `exigente`. Ante dudas, revisá el archivo señalado y el criterio en `CRITERIOS-CALIDAD.md`._
