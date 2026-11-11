@@ -1,20 +1,6 @@
-import { useState } from 'react'
-
-import {
-  discoverFaceit,
-  linkFaceit,
-  startFaceitOauth,
-} from '../../services/faceit.js'
-import { getErrorMessage } from '../../utils/errors.js'
+import useFaceitDiscovery from './useFaceitDiscovery.js'
 import Alert from '../common/Alert.jsx'
 import SourceBadge from '../steam/SourceBadge.jsx'
-
-const DISCOVER_ERROR =
-  'No pudimos consultar FACEIT. Intentalo de nuevo.'
-const LINK_ERROR =
-  'No pudimos vincular la cuenta de FACEIT. Intentalo de nuevo.'
-const OAUTH_ERROR =
-  'No pudimos iniciar la vinculación con FACEIT Connect.'
 
 function PlayerPreview({ player }) {
   return (
@@ -39,53 +25,13 @@ function PlayerPreview({ player }) {
 }
 
 export default function FaceitLinkCard({ faceit, onChange }) {
-  const [discovering, setDiscovering] = useState(false)
-  const [linking, setLinking] = useState(false)
-  const [redirecting, setRedirecting] = useState(false)
-  const [discovery, setDiscovery] = useState(null)
-  const [error, setError] = useState('')
+  const {
+    discovering, linking, redirecting, discovery, error,
+    handleDiscover, handleLink, handleOauth,
+  } = useFaceitDiscovery(onChange)
 
   const configured = Boolean(faceit?.configured)
   const oauthConfigured = Boolean(faceit?.oauth_configured)
-
-  async function handleDiscover() {
-    setDiscovering(true)
-    setError('')
-    setDiscovery(null)
-    try {
-      setDiscovery(await discoverFaceit())
-    } catch (err) {
-      setError(getErrorMessage(err, DISCOVER_ERROR))
-    } finally {
-      setDiscovering(false)
-    }
-  }
-
-  async function handleLink() {
-    setLinking(true)
-    setError('')
-    try {
-      await linkFaceit(discovery?.player?.player_id)
-      setDiscovery(null)
-      onChange?.()
-    } catch (err) {
-      setError(getErrorMessage(err, LINK_ERROR))
-    } finally {
-      setLinking(false)
-    }
-  }
-
-  async function handleOauth() {
-    setRedirecting(true)
-    setError('')
-    try {
-      const url = await startFaceitOauth()
-      window.location.assign(url)
-    } catch (err) {
-      setError(getErrorMessage(err, OAUTH_ERROR))
-      setRedirecting(false)
-    }
-  }
 
   return (
     <section className="player-panel faceit-card">

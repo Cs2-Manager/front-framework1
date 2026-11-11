@@ -9,6 +9,8 @@
  *     node scripts/verify-spa-routes.mjs
  */
 
+import { error as reportError, info, ok, section } from './lib/cli-report.mjs'
+
 const FRONT_URL = (process.env.FRONT_URL || 'http://localhost').replace(/\/$/, '')
 const API_URL = (process.env.API_URL || 'http://localhost/api').replace(
   /\/$/,
@@ -67,7 +69,7 @@ async function checkSpaRoute(route) {
       failures.push(`${route} → no devolvió el HTML de la SPA`)
       return
     }
-    console.log(`  ok  ${route}`)
+    ok(route)
   } catch (error) {
     failures.push(`${route} → ${error.message}`)
   }
@@ -84,7 +86,7 @@ async function checkApiNotSpa() {
       failures.push('/api/health → el fallback SPA está capturando la API')
       return
     }
-    console.log(`  ok  /api/health no devuelve HTML (HTTP ${response.status})`)
+    ok(`/api/health no devuelve HTML (HTTP ${response.status})`)
   } catch (error) {
     failures.push(`/api/health → ${error.message}`)
   }
@@ -102,31 +104,31 @@ async function checkApiHealth() {
       return
     }
     JSON.parse(body)
-    console.log(`  ok  API ${url}`)
+    ok(`API ${url}`)
   } catch (error) {
     failures.push(`API ${url} → ${error.message}`)
   }
 }
 
-console.log(`Frontend: ${FRONT_URL}`)
-console.log(`API:      ${API_URL}`)
-console.log('\nRutas SPA:')
+info(`Frontend: ${FRONT_URL}`)
+info(`API:      ${API_URL}`)
+section('Rutas SPA:')
 for (const route of ROUTES) {
   await checkSpaRoute(route)
 }
 
-console.log('\nSeparación API / SPA:')
+section('Separación API / SPA:')
 await checkApiNotSpa()
 
-console.log('\nBackend:')
+section('Backend:')
 await checkApiHealth()
 
 if (failures.length > 0) {
-  console.error(`\n${failures.length} verificación(es) fallaron:`)
+  reportError(`\n${failures.length} verificación(es) fallaron:`)
   for (const failure of failures) {
-    console.error(`  - ${failure}`)
+    reportError(`  - ${failure}`)
   }
   process.exit(1)
 }
 
-console.log('\nTodas las rutas y la API responden correctamente.')
+info('\nTodas las rutas y la API responden correctamente.')

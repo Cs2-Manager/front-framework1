@@ -1,0 +1,151 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/components/maps/StrategySteps.jsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/maps</a> StrategySteps.jsx</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">33.33% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>9/27</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">55% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>11/20</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">20% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>4/20</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">40% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>6/15</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState } from 'react'
+export default function StrategySteps({ steps, onChange, readOnly, onHighlight, players = [], elements = [], grenades = [] }) {
+  const [index, setIndex] = useState(0)
+  const current = steps[index]
+  const select = n =&gt; { setIndex(n); onHighlight?.(steps[n]?.element_ids || <span class="branch-1 cbranch-no" title="branch not covered" >[])</span> }
+  const <span class="fstat-no" title="function not covered" >update = p</span>atch =&gt; <span class="cstat-no" title="statement not covered" >onChange(steps.<span class="fstat-no" title="function not covered" >map((s</span>, i) =&gt; <span class="cstat-no" title="statement not covered" >i === index ? { ...s, ...patch } : s)</span>)</span>
+  return &lt;section className="team-panel"&gt;&lt;h3&gt;Pasos de ejecución&lt;/h3&gt;
+    &lt;div className="tactical-toolbar"&gt;&lt;button type="button" disabled={index === 0} onClick={() =&gt; select(index - 1)}&gt;Anterior&lt;/button&gt;&lt;span&gt;{steps.length ? index + 1 : 0} / {steps.length}&lt;/span&gt;&lt;button type="button" disabled={index &gt;= steps.length - 1} onClick={() =&gt; select(index + 1)}&gt;Siguiente&lt;/button&gt;
+      {!readOnly &amp;&amp; &lt;button type="button" <span class="fstat-no" title="function not covered" >onClick={() =&gt; {</span> <span class="cstat-no" title="statement not covered" >onChange([...steps, { title: `Paso ${steps.length + 1}`, description: '', order: steps.length + 1, actions: '', user_ids: [], element_ids: [], grenade_ids: [] }]); <span class="cstat-no" title="statement not covered" >s</span>etIndex(steps.length) }</span>}&gt;Agregar paso&lt;/button&gt;}&lt;/div&gt;
+    {!current ? &lt;p&gt;Sin pasos de ejecución.&lt;/p&gt; : readOnly ? &lt;&gt;&lt;h4&gt;{current.title}&lt;/h4&gt;&lt;p&gt;{current.description}&lt;/p&gt;&lt;p&gt;{current.actions}&lt;/p&gt;&lt;/&gt; : <span class="branch-1 cbranch-no" title="branch not covered" >&lt;&gt;</span>
+      &lt;label&gt;Título del paso&lt;input value={current.title} <span class="fstat-no" title="function not covered" >onChange={e</span> =&gt; <span class="cstat-no" title="statement not covered" >update({ title: e.target.value })} /&gt;</span>&lt;/label&gt;
+      &lt;label&gt;Descripción del paso&lt;textarea value={current.description} <span class="fstat-no" title="function not covered" >onChange={e</span> =&gt; <span class="cstat-no" title="statement not covered" >update({ description: e.target.value })} /&gt;</span>&lt;/label&gt;
+      &lt;label&gt;Acciones&lt;textarea value={current.actions} <span class="fstat-no" title="function not covered" >onChange={e</span> =&gt; <span class="cstat-no" title="statement not covered" >update({ actions: e.target.value })} /&gt;</span>&lt;/label&gt;
+      {[
+        ['user_ids', 'Jugadores del paso', players.<span class="fstat-no" title="function not covered" >map(p</span> =&gt; <span class="cstat-no" title="statement not covered" >[p.user.id, p.user.nickname])</span>],
+        ['element_ids', 'Elementos del paso', elements.<span class="fstat-no" title="function not covered" >map(e</span> =&gt; <span class="cstat-no" title="statement not covered" >[e.id, e.text || e.marker || e.kind])</span>],
+        ['grenade_ids', 'Granadas del paso', grenades.<span class="fstat-no" title="function not covered" >map(g</span> =&gt; <span class="cstat-no" title="statement not covered" >[g.id, g.title])</span>],
+      ].<span class="fstat-no" title="function not covered" >map(([</span>key, label, options]) =&gt; <span class="cstat-no" title="statement not covered" >&lt;label key={key}&gt;{label}&lt;select multiple value={current[key].map(String)} <span class="fstat-no" title="function not covered" >onChange={e</span> =&gt; <span class="cstat-no" title="statement not covered" >update({ [key]: [...e.target.selectedOptions].<span class="fstat-no" title="function not covered" >map(o</span> =&gt; <span class="cstat-no" title="statement not covered" >key === 'element_ids' ? o.value : Number(o.value))</span> })}&gt;{o</span>ptions.<span class="fstat-no" title="function not covered" >map(([</span>id, title]) =&gt; <span class="cstat-no" title="statement not covered" >&lt;option key={id} value={id}&gt;{title}&lt;/option&gt;)</span>}&lt;/select&gt;&lt;/label&gt;)</span>}
+      &lt;button type="button" <span class="fstat-no" title="function not covered" >onClick={() =&gt; {</span> <span class="cstat-no" title="statement not covered" >onChange(steps.<span class="fstat-no" title="function not covered" >filter((_</span>, i) =&gt; <span class="cstat-no" title="statement not covered" >i !== index)</span>.<span class="fstat-no" title="function not covered" >map((s</span>, i) =&gt; (<span class="cstat-no" title="statement not covered" >{ ...s, order: i + 1 }))</span>); <span class="cstat-no" title="statement not covered" >s</span>etIndex(0) }</span>}&gt;Eliminar paso&lt;/button&gt;
+    &lt;/&gt;}
+  &lt;/section&gt;
+}
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-11-11T00:51:51.560Z
+            </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    

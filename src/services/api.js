@@ -28,7 +28,10 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401 && localStorage.getItem(AUTH_TOKEN_KEY)) {
+    const token = localStorage.getItem(AUTH_TOKEN_KEY)
+    const authorization = error.config?.headers?.Authorization
+    // An old/anonymous request must not invalidate a subsequently opened session.
+    if (error.response?.status === 401 && token && authorization === `Bearer ${token}`) {
       unauthorizedHandler?.(error)
     }
     return Promise.reject(error)

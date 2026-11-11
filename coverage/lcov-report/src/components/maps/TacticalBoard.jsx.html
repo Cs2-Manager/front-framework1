@@ -1,0 +1,367 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/components/maps/TacticalBoard.jsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/maps</a> TacticalBoard.jsx</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">57.4% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>62/108</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">56.17% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>50/89</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">65.95% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>31/47</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">63.93% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>39/61</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line medium'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">177x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">285x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useRef, useState } from 'react'
+&nbsp;
+export const MARKERS = ['P1', 'P2', 'P3', 'P4', 'P5', 'A', 'B', 'Mid', 'Smoke', 'Flash', 'Molotov', 'HE', 'Objective', 'Zone', 'Position']
+const clamp = n =&gt; Math.min(1, Math.max(0, n))
+export const normalizedPoint = (x, y) =&gt; [clamp(x / 1000), clamp(y / 1000)]
+&nbsp;
+export default function TacticalBoard({ map, elements, onChange, readOnly = false, players = [], highlighted = [] }) {
+  const svg = useRef(null)
+  const [tool, setTool] = useState('select')
+  const [marker, setMarker] = useState('P1')
+  const [selected, setSelected] = useState(null)
+  const [draft, setDraft] = useState([])
+  const [view, setView] = useState({ x: 0, y: 0, size: 1000 })
+  const drag = useRef(null)
+  const item = elements.find(e =&gt; e.id === selected)
+  function position(event) {
+    const p = svg.current.createSVGPoint()
+    p.x = event.clientX; p.y = event.clientY
+    const transformed = p.matrixTransform(svg.current.getScreenCTM().inverse())
+    return normalizedPoint(transformed.x, transformed.y)
+  }
+  function update(patch) { onChange(elements.map(e =&gt; e.id === selected ? { ...e, ...patch } : <span class="branch-1 cbranch-no" title="branch not covered" >e)</span>) }
+  function add(points) {
+    const element = { id: crypto.randomUUID(), kind: tool, points, text: '', ...(tool === 'marker' ? { marker } : {}) }
+    onChange([...elements, element]); setSelected(element.id); setDraft([])
+  }
+  function down(event) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (tool === 'pan') {
+<span class="cstat-no" title="statement not covered" >      drag.current = { pan: true, x: event.clientX, y: event.clientY, view }</span>
+<span class="cstat-no" title="statement not covered" >      svg.current.setPointerCapture(event.pointerId)</span>
+<span class="cstat-no" title="statement not covered" >      return</span>
+    }
+    if (readOnly || event.target.closest('[data-element]')) return
+    const p = position(event)
+    if (tool === 'marker' || tool === 'text') add([p])
+    else <span class="missing-if-branch" title="if path not taken" >I</span>if (['line', 'arrow'].includes(tool)) {
+<span class="cstat-no" title="statement not covered" >      if (draft.length) <span class="cstat-no" title="statement not covered" >add([draft[0], p]); else <span class="cstat-no" title="statement not covered" >s</span>etDraft([p])</span></span>
+    } else if (['path', 'area'].includes(tool)) setDraft([...draft, p])
+    else <span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="else path not taken" >E</span>setSelected(null)</span>
+  }
+  function <span class="fstat-no" title="function not covered" >move(e</span>vent) {
+<span class="cstat-no" title="statement not covered" >    if (!drag.current) <span class="cstat-no" title="statement not covered" >return</span></span>
+<span class="cstat-no" title="statement not covered" >    if (drag.current.pan) {</span>
+      const d = <span class="cstat-no" title="statement not covered" >drag.current, s</span>cale = <span class="cstat-no" title="statement not covered" >d.view.size / svg.current.getBoundingClientRect().width</span>
+<span class="cstat-no" title="statement not covered" >      setView({ ...d.view, x: d.view.x - (event.clientX - d.x) * scale, y: d.view.y - (event.clientY - d.y) * scale })</span>
+    } else {
+      const p = <span class="cstat-no" title="statement not covered" >position(event), d</span> = <span class="cstat-no" title="statement not covered" >drag.current</span>
+<span class="cstat-no" title="statement not covered" >      onChange(elements.<span class="fstat-no" title="function not covered" >map(e</span> =&gt; <span class="cstat-no" title="statement not covered" >e.id === d.id ? { ...e, points: d.points.<span class="fstat-no" title="function not covered" >map(([</span>x, y]) =&gt; <span class="cstat-no" title="statement not covered" >[clamp(x + p[0] - d.start[0]), clamp(y + p[1] - d.start[1])])</span> } : e)</span>)</span>
+    }
+  }
+  function <span class="fstat-no" title="function not covered" >select(e</span>vent, element) {
+<span class="cstat-no" title="statement not covered" >    if (tool === 'pan') <span class="cstat-no" title="statement not covered" >return</span></span>
+<span class="cstat-no" title="statement not covered" >    event.stopPropagation()</span>
+<span class="cstat-no" title="statement not covered" >    setSelected(element.id)</span>
+<span class="cstat-no" title="statement not covered" >    if (readOnly) <span class="cstat-no" title="statement not covered" >return</span></span>
+<span class="cstat-no" title="statement not covered" >    if (tool === 'erase') { <span class="cstat-no" title="statement not covered" >onChange(elements.<span class="fstat-no" title="function not covered" >filter(e</span> =&gt; <span class="cstat-no" title="statement not covered" >e.id !== element.id)</span>); <span class="cstat-no" title="statement not covered" >s</span>etSelected(null); <span class="cstat-no" title="statement not covered" >r</span>eturn }</span></span>
+<span class="cstat-no" title="statement not covered" >    if (tool === 'select') {</span>
+<span class="cstat-no" title="statement not covered" >      drag.current = { id: element.id, start: position(event), points: element.points }</span>
+<span class="cstat-no" title="statement not covered" >      svg.current.setPointerCapture(event.pointerId)</span>
+    }
+  }
+  function zoom(factor) { setView(v =&gt; { const size = Math.max(200, Math.min(1500, v.size * factor)); return { x: v.x + (v.size - size) / 2, y: v.y + (v.size - size) / 2, size } }) }
+  return &lt;section className="tactical-board" aria-label="Tablero táctico"&gt;
+    &lt;div className="tactical-toolbar"&gt;
+      &lt;label&gt;Herramienta&lt;select value={tool} onChange={e =&gt; { setTool(e.target.value); setDraft([]) }}&gt;
+        {(readOnly ? ['select', 'pan'] : ['select', 'pan', 'marker', 'line', 'arrow', 'path', 'area', 'text', 'erase']).map(t =&gt; &lt;option key={t} value={t}&gt;{({ select: 'Seleccionar', pan: 'Desplazar', marker: 'Marcador', line: 'Línea', arrow: 'Flecha', path: 'Recorrido', area: 'Zona', text: 'Anotación', erase: 'Borrar' })[t]}&lt;/option&gt;)}
+      &lt;/select&gt;&lt;/label&gt;
+      {!readOnly &amp;&amp; &lt;label&gt;Marcador&lt;select value={marker} <span class="fstat-no" title="function not covered" >onChange={e</span> =&gt; <span class="cstat-no" title="statement not covered" >setMarker(e.target.value)}&gt;{M</span>ARKERS.map(m =&gt; &lt;option key={m}&gt;{m}&lt;/option&gt;)}&lt;/select&gt;&lt;/label&gt;}
+      &lt;button type="button" onClick={() =&gt; zoom(.8)} aria-label="Acercar"&gt;＋&lt;/button&gt;&lt;button type="button" <span class="fstat-no" title="function not covered" >onClick={() =&gt; <span class="cstat-no" title="statement not covered" >z</span>oom(1.25)} a</span>ria-label="Alejar"&gt;−&lt;/button&gt;
+      &lt;button type="button" onClick={() =&gt; setView({ x: 0, y: 0, size: 1000 })}&gt;Mapa completo&lt;/button&gt;
+      {draft.length &gt; 0 &amp;&amp; &lt;&gt;&lt;button type="button" disabled={draft.length &lt; (tool === 'area' ? 3 : <span class="branch-1 cbranch-no" title="branch not covered" >2)} o</span>nClick={() =&gt; add(draft)}&gt;Terminar dibujo&lt;/button&gt;&lt;button type="button" <span class="fstat-no" title="function not covered" >onClick={() =&gt; <span class="cstat-no" title="statement not covered" >s</span>etDraft([])}&gt;C</span>ancelar dibujo&lt;/button&gt;&lt;/&gt;}
+    &lt;/div&gt;
+    &lt;p className="text-muted"&gt;Seleccioná una herramienta y pulsá sobre el plano. Recorridos y zonas se dibujan punto a punto. Podés editar coordenadas sin arrastrar.&lt;/p&gt;
+    &lt;svg ref={svg} viewBox={`${view.x} ${view.y} ${view.size} ${view.size}`} onPointerDown={down} onPointerMove={move} <span class="fstat-no" title="function not covered" >onPointerUp={() =&gt; {</span> <span class="cstat-no" title="statement not covered" >drag.current = null }</span>} <span class="fstat-no" title="function not covered" >onPointerCancel={() =&gt; {</span> <span class="cstat-no" title="statement not covered" >drag.current = null }</span>} aria-label={`Plano táctico de ${map.name}`}&gt;
+      &lt;defs&gt;&lt;marker id="tactical-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"&gt;&lt;path d="M0,0 L0,6 L9,3 z" fill="#ffd075" /&gt;&lt;/marker&gt;&lt;/defs&gt;
+      &lt;image href={map.image_url} width="1000" height="1000" preserveAspectRatio="none" /&gt;
+      {(map.callouts || <span class="branch-1 cbranch-no" title="branch not covered" >[])</span>.map(c =&gt; &lt;g key={c.id} pointerEvents="none"&gt;&lt;circle cx={c.x_ratio * 1000} cy={c.y_ratio * 1000} r="7" fill="white"/&gt;&lt;text x={c.x_ratio * 1000 + 10} y={c.y_ratio * 1000} className="callout-label"&gt;{c.zone_name}&lt;/text&gt;&lt;/g&gt;)}
+      {elements.map(e =&gt; {
+        const points = e.points.map(p =&gt; p.map(n =&gt; n * 1000).join(',')).join(' ')
+        const [x, y] = e.points[0].map(n =&gt; n * 1000)
+        return &lt;g key={e.id} data-element={e.id} tabIndex="0" role="button" aria-label={`${e.kind} ${e.marker || e.text || e.id}`} <span class="fstat-no" title="function not covered" >onPointerDown={e</span>v =&gt; <span class="cstat-no" title="statement not covered" >select(ev, e)} <span class="fstat-no" title="function not covered" >o</span>nKeyDown={e</span>v =&gt; { <span class="cstat-no" title="statement not covered" >if (ev.key === 'Enter') <span class="cstat-no" title="statement not covered" >setSelected(e.id); <span class="cstat-no" title="statement not covered" >i</span></span>f (!readOnly &amp;&amp; ev.key === 'Delete') <span class="cstat-no" title="statement not covered" >onChange(elements.<span class="fstat-no" title="function not covered" >filter(v</span> =&gt; <span class="cstat-no" title="statement not covered" >v.id !== e.id)</span>) }</span></span>} className={selected === e.id || highlighted.includes(e.id) ? 'selected-element' : ''}&gt;
+          {e.kind === 'marker' ? &lt;&gt;&lt;circle cx={x} cy={y} r="22" fill="#172d4c" stroke="#ffd075" strokeWidth="3"/&gt;&lt;text x={x} y={y + 6} textAnchor="middle" fill="white" fontSize="16"&gt;{e.marker}&lt;/text&gt;&lt;text x={x + 26} y={y} className="callout-label"&gt;{e.text}&lt;/text&gt;&lt;/&gt; : e.kind === 'text' ? <span class="branch-0 cbranch-no" title="branch not covered" >&lt;text x={x} y={y} className="callout-label"&gt;{e.text || 'Anotación'}&lt;/text&gt; : e.k</span>ind === 'area' ? &lt;polygon points={points} fill="#ffc45c44" stroke="#ffd075" strokeWidth="4" /&gt; : <span class="branch-1 cbranch-no" title="branch not covered" >&lt;polyline points={points} fill="none" stroke="#ffd075" strokeWidth="4" markerEnd={e.kind === 'arrow' ? 'url(#tactical-arrow)' : undefined} /&gt;}</span>
+        &lt;/g&gt;
+      })}
+      {draft.length &gt; 0 &amp;&amp; &lt;polyline points={draft.map(p =&gt; p.map(n =&gt; n * 1000).join(',')).join(' ')} fill="none" stroke="white" strokeWidth="5" /&gt;}
+    &lt;/svg&gt;
+    {item &amp;&amp; !readOnly &amp;&amp; &lt;div className="tactical-inspector"&gt;
+      &lt;label&gt;Texto del elemento&lt;input value={item.text || ''} maxLength={500} <span class="fstat-no" title="function not covered" >onChange={e</span> =&gt; <span class="cstat-no" title="statement not covered" >update({ text: e.target.value })} /&gt;</span>&lt;/label&gt;
+      {item.kind === 'marker' &amp;&amp; &lt;label&gt;Jugador asignado&lt;select value={item.user_id || ''} <span class="fstat-no" title="function not covered" >onChange={e</span> =&gt; <span class="cstat-no" title="statement not covered" >update({ user_id: e.target.value ? Number(e.target.value) : null })}&gt;&lt;</span>option value=""&gt;Sin asignar&lt;/option&gt;{players.<span class="fstat-no" title="function not covered" >map(p</span> =&gt; <span class="cstat-no" title="statement not covered" >&lt;option key={p.user.id} value={p.user.id}&gt;{p.user.nickname} · {p.role || 'Sin rol'}&lt;/option&gt;)</span>}&lt;/select&gt;&lt;/label&gt;}
+      {item.points.map((p, index) =&gt; &lt;div key={index} className="tactical-coordinates"&gt;{['X', 'Y'].map((axis, axisIndex) =&gt; &lt;label key={axis}&gt;{axis} {index + 1}&lt;input type="number" min="0" max="1" step="any" value={p[axisIndex]} onChange={e =&gt; update({ points: item.points.map((v, i) =&gt; i === index ? v.map((n, j) =&gt; j === axisIndex ? clamp(Number(e.target.value)) : n) : <span class="branch-1 cbranch-no" title="branch not covered" >v)</span> })} /&gt;&lt;/label&gt;)}&lt;/div&gt;)}
+      &lt;button type="button" onClick={() =&gt; { onChange(elements.filter(e =&gt; e.id !== selected)); setSelected(null) }}&gt;Eliminar elemento&lt;/button&gt;
+    &lt;/div&gt;}
+  &lt;/section&gt;
+}
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-11-11T00:51:51.560Z
+            </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    

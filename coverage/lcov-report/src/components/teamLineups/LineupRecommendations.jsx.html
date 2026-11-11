@@ -1,0 +1,142 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/components/teamLineups/LineupRecommendations.jsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/teamLineups</a> LineupRecommendations.jsx</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">46.15% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>12/26</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">56.25% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>9/16</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">37.5% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>3/8</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">77.77% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>7/9</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import api from '../../services/api.js'
+import Alert from '../common/Alert.jsx'
+export default function LineupRecommendations({ team, lineup }) {
+  const [strategies, setStrategies] = useState([]), [selected, setSelected] = useState([]), [error, setError] = useState(''), [busy, setBusy] = useState(false), [feedback, setFeedback] = useState('')
+  const available = team?.is_member || team?.permissions?.can_manage_lineups
+  useEffect(() =&gt; {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!available) <span class="cstat-no" title="statement not covered" >return</span>
+    Promise.all([api.get(`/teams/${team.id}/strategies`, { params: lineup.map_id ? <span class="branch-0 cbranch-no" title="branch not covered" >{ map_id: lineup.map_id } : {</span>} }), api.get(`/teams/${team.id}/lineups/${lineup.id}/recommendations`)]).<span class="fstat-no" title="function not covered" >then(([</span>s, r]) =&gt; { <span class="cstat-no" title="statement not covered" >setStrategies(s.data.strategies); <span class="cstat-no" title="statement not covered" >s</span>etSelected(r.data.strategy_ids) }</span>).catch(() =&gt; setError('No se pudieron cargar las recomendaciones.'))
+  }, [available, team?.id, lineup.id, lineup.map_id])
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!available) <span class="cstat-no" title="statement not covered" >return null</span>
+  async function <span class="fstat-no" title="function not covered" >save() {</span> <span class="cstat-no" title="statement not covered" >setBusy(true); <span class="cstat-no" title="statement not covered" >s</span>etError(''); <span class="cstat-no" title="statement not covered" >t</span>ry { <span class="cstat-no" title="statement not covered" >await api.put(`/teams/${team.id}/lineups/${lineup.id}/recommendations`, { strategy_ids: selected }); <span class="cstat-no" title="statement not covered" >s</span>etFeedback('Recomendaciones guardadas.') }</span> catch { <span class="cstat-no" title="statement not covered" >setError('No se pudieron guardar las recomendaciones.') }</span> finally { <span class="cstat-no" title="statement not covered" >setBusy(false) }</span> }</span>
+  return &lt;section className="team-panel"&gt;&lt;h2&gt;Estrategias recomendadas&lt;/h2&gt;&lt;Alert&gt;{error}&lt;/Alert&gt;&lt;Alert variant="success"&gt;{feedback}&lt;/Alert&gt;
+    {!strategies.length &amp;&amp; &lt;p&gt;Creá estrategias desde el centro táctico del mapa.&lt;/p&gt;}
+    {strategies.<span class="fstat-no" title="function not covered" >map(s</span> =&gt; <span class="cstat-no" title="statement not covered" >&lt;label key={s.id} style={{ display: 'block', padding: '.5rem' }}&gt;&lt;input type="checkbox" disabled={!lineup.permissions?.can_edit || busy} checked={selected.includes(s.id)} <span class="fstat-no" title="function not covered" >onChange={e</span> =&gt; <span class="cstat-no" title="statement not covered" >setSelected(e.target.checked ? [...selected, s.id] : selected.<span class="fstat-no" title="function not covered" >filter(i</span>d =&gt; <span class="cstat-no" title="statement not covered" >id !== s.id)</span>)} /&gt;</span> {s.name} · {s.side} &lt;Link to={`/maps/${s.map_id}`}&gt;Abrir mapa&lt;/Link&gt;&lt;/label&gt;)</span>}
+    {lineup.permissions?.can_edit &amp;&amp; &lt;button disabled={busy} onClick={save}&gt;Guardar recomendaciones&lt;/button&gt;}
+  &lt;/section&gt;
+}
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-11-11T00:51:51.560Z
+            </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    

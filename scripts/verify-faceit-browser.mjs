@@ -4,6 +4,7 @@
 import { readFile } from 'node:fs/promises'
 import { pathToFileURL } from 'node:url'
 import assert from 'node:assert/strict'
+import { info } from './lib/cli-report.mjs'
 
 const { chromium } = await import(
   pathToFileURL(process.env.FACEIT_PLAYWRIGHT_MODULE).href
@@ -80,7 +81,7 @@ try {
   }
 
   assert.deepEqual(errors, [], `Errores de navegador: ${errors.join(' | ')}`)
-  console.log(
+  info(
     'FACEIT browser verification OK: identity, stats, matches, maps, ELO, ' +
       'callback banners and 1440/768/390 layouts.',
   )

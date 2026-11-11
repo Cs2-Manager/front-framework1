@@ -1,0 +1,56 @@
+{
+  "date": "2026-11-10",
+  "status": "partial_quality_closure_not_official_approval",
+  "scope": "front/ local working tree; deployed services only for read-only checks",
+  "environment": {
+    "platform": "win32",
+    "node": "24.16.0",
+    "npm": "11.13.0",
+    "react": "19.2.8",
+    "vite": "8.3.7",
+    "vitest": "5.0.5",
+    "coverage_v8": "5.0.5",
+    "axios": "1.20.0"
+  },
+  "commands": [
+    { "command": "npm test -- --maxWorkers=2", "exit_code": 0, "suites_passed": 88, "tests_passed": 473 },
+    { "command": "npm run test:coverage -- --maxWorkers=2", "exit_code": 0, "suites_passed": 88, "tests_passed": 473, "line_coverage": 83.12, "covered_lines": 2577, "total_lines": 3100 },
+    { "command": "npm run build", "exit_code": 0, "modules_transformed": 367, "warning": "Minified JS chunk exceeds 500 kB", "javascript_kb": 609.34, "javascript_gzip_kb": 176.66 },
+    { "command": "npm run verify:routes", "exit_code": 0, "spa_paths_passed": 21, "target": "http://localhost", "api_health_status": 200, "api_not_html": true, "limitation": "Existing Docker deployment, not necessarily final local assets" },
+    { "command": "node test/browser/phase-c.mjs", "exit_code": 0, "browser": "installed Microsoft Edge via external Playwright", "target": "current source served by transient Vite", "uncaught_javascript_errors": [], "landing_widths": [1440, 768, 390] },
+    { "command": "npm audit --omit=dev --json", "exit_code": 0, "known_vulnerabilities": 0 },
+    { "command": "node scripts/audit_react_quality.cjs --self-test (from parent)", "exit_code": 0, "checks_passed": 4 }
+  ],
+  "real_integrations": {
+    "flask_public_players_status": 200,
+    "flask_health_status": 200,
+    "nest_health_status": 200,
+    "nest_unauthenticated_socket_rejection": "AUTH_MISSING_TOKEN",
+    "docker_read_only_inspection": {
+      "front-frontend-1": "running healthy",
+      "back-backend-1": "running healthy",
+      "cs2_manager_realtime": "running healthy",
+      "cs2_manager_db": "running healthy"
+    }
+  },
+  "fixture_browser_checks": [
+    "positive login and logout, token cleared",
+    "protected navigation",
+    "non-admin map controls hidden",
+    "private-team edit denied with 403 and no save form"
+  ],
+  "not_executed": [
+    "real Steam or FACEIT authentication/synchronization",
+    "real successful login against Flask/PostgreSQL",
+    "real authenticated Nest socket",
+    "official quality evaluator",
+    "independent clean GitHub main clone"
+  ],
+  "manifest_verification": { "files": 349, "matching_sha256": 349 },
+  "final_configuration_sha256": {
+    "package.json": "e5d244dc6e68238d6759275fa328aac4a35510c0e111fa9a7f34361e36f3466e",
+    "package-lock.json": "8c8cda4d62e79480410cbbc4478acb9a123466271d21d761036b88b451d11cb7",
+    "vite.config.js": "9041cff842564c967c61f02a211e7b6268d9f10c8e3746f54e7f4cbf2265b5ee"
+  },
+  "remaining_local_failures": { "index": 2, "index_minimum": 60, "big_components": 10, "big_components_maximum": 1, "complex_functions": 166, "complex_functions_maximum": 121, "debug_lines_full_scope": 11 }
+}

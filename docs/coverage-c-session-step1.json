@@ -1,0 +1,10 @@
+{
+  "scope": "Same production scope as session initial",
+  "test_files_passed": 86,
+  "tests_passed": 466,
+  "production_files": 256,
+  "lines": { "total": 3090, "covered": 2551, "skipped": 0, "pct": 82.55 },
+  "statements": { "total": 3570, "covered": 2803, "skipped": 0, "pct": 78.51 },
+  "functions": { "total": 1332, "covered": 984, "skipped": 0, "pct": 73.87 },
+  "branches": { "total": 3355, "covered": 2339, "skipped": 0, "pct": 69.71 }
+}
