@@ -3,7 +3,7 @@
 
 > Documento **generado automáticamente** por la cátedra de Programación III (RepoSense + análisis de calidad + constancia). **No editar a mano**: se regenera en cada evaluación.
 > Rama evaluada: `main`. Análisis **heurístico** (regex + métricas): es una criba para orientar la revisión, **no una nota**.
-> Generado: 2026-11-11.
+> Generado: 2026-11-13.
 
 ## 1. Veredicto
 
@@ -36,7 +36,7 @@
 
 | Alumno | Sesiones | Cumplimiento | Pausa | Recencia | IC | Nivel | Para subir de nivel |
 |---|--:|--:|--:|--:|--:|--|--|
-| Gaspar Giménez | 7 | 27% | 30 d | 100% | **32** | No aprueba | Cumplimiento 27% (mín. 50%) |
+| Gaspar Giménez | 7 | 27% | 30 d | 86% | **29** | No aprueba | Cumplimiento 27% (mín. 50%) |
 
 > Para aprobar el IC: **2 sesiones por semana** sostenidas, sin pausas mayores a **10 días** y con actividad en las **últimas 2 semanas**. Se excluyen merges, bots y al docente. Zona horaria UTC-3.
 
@@ -138,13 +138,13 @@ Cada aspecto indica **qué mide**, **por qué importa** y **tu resultado**. Cuan
 
 _Cumple **todos** los criterios del semáforo: no hay nada que arreglar para aprobar. El siguiente objetivo es sostenerlo y mejorar duplicación y diseño._
 
-## 6. Actividad en clase (miércoles y viernes)
+## 6. Actividad en clase y fuera de clase
 
-> Se consideran las **26 clases** del período (miércoles y viernes, según `config/constancia.json`; feriados y semanas sin clase descontados). `Commits` = commits de trabajo (no-merge); `Merges` = merges de PR (también son push). Los días sin actividad dicen **sin actividad**.
+> Se consideran las **27 clases** del período (miércoles y viernes, según `config/constancia.json`; feriados y semanas sin clase descontados). Para cada alumno se muestra la actividad **en cada clase** y también la actividad **fuera de los días de clase** (fines de semana u otros días). `Commits` = commits de trabajo (no-merge); `Merges` = merges de PR (también son push). Los días sin actividad dicen **sin actividad**.
 
 ### Facu2009
 
-**7/26 clases con actividad** · 9 commits · 10 merges
+**7/27 clases con actividad** · total del período: 10 commits · 10 merges
 
 | Fecha | Actividad | Repositorios | Commits / merges |
 |---|:--:|---|--:|
@@ -173,11 +173,20 @@ _Cumple **todos** los criterios del semáforo: no hay nada que arreglar para apr
 | 2026-10-30 | **Sí** | backend1, front-framework1 | 1 / 2 |
 | 2026-11-04 | No | sin actividad | 0 / 0 |
 | 2026-11-06 | **Sí** | backend1 | 1 / 1 |
-| 2026-11-11 | **Sí** | backend1 | 1 / 1 |
+| 2026-11-11 | **Sí** | backend1 | 2 / 1 |
+| 2026-11-13 | No | sin actividad | 0 / 0 |
+
+**Fuera de clase:** 3 fecha(s) con actividad · 3 commits · 4 merges
+
+| Fecha | Repositorios | Commits / merges |
+|---|---|--:|
+| 2026-10-17 | backend1, front-framework1 | 3 / 2 |
+| 2026-10-22 | front-framework1 | 0 / 1 |
+| 2026-11-12 | backend1 | 0 / 1 |
 
 ### Gaspar Giménez
 
-**9/26 clases con actividad** · 10 commits · 6 merges
+**9/27 clases con actividad** · total del período: 10 commits · 6 merges
 
 | Fecha | Actividad | Repositorios | Commits / merges |
 |---|:--:|---|--:|
@@ -207,6 +216,9 @@ _Cumple **todos** los criterios del semáforo: no hay nada que arreglar para apr
 | 2026-11-04 | No | sin actividad | 0 / 0 |
 | 2026-11-06 | **Sí** | front-framework1 | 2 / 1 |
 | 2026-11-11 | **Sí** | front-framework1 | 1 / 1 |
+| 2026-11-13 | No | sin actividad | 0 / 0 |
+
+**Fuera de clase:** sin actividad registrada.
 
 ## 7. Anexo: dónde mirar
 
